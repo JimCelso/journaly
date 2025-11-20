@@ -175,3 +175,82 @@ button:hover {
     box-shadow: 0 0 12px rgba(255, 120, 255, 0.25);
     animation: fadeIn 0.5s ease;
 }
+
+/* --- ESTILO PARA LOGIN, SIGNUP Y PROFILE-SETUP --- */
+
+.auth-container {
+    width: 90%;
+    max-width: 450px;
+    margin: 5rem auto;
+    padding: 2.5rem;
+    background: rgba(0,0,0,0.55);
+    border-radius: 1.2rem;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 25px rgba(255, 80, 250, 0.35);
+    animation: fadeIn 0.8s ease;
+    text-align: center;
+}
+
+.auth-container h1,
+.auth-container h2 {
+    margin-bottom: 1.5rem;
+}
+
+.auth-container input {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 0.6rem;
+    margin-top: 1rem;
+    outline: none;
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.auth-container button {
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 0.9rem;
+    border: none;
+    border-radius: 0.6rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: #ff80ff;
+    color: #000;
+    transition: 0.3s ease;
+}
+
+.auth-container button:hover {
+    background: #ffb3ff;
+}
+
+.auth-link {
+    margin-top: 1rem;
+    display: block;
+    font-size: 0.95rem;
+    color: #ffb3ff;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.auth-link:hover {
+    color: white;
+    text-shadow: 0 0 10px #ff80ff;
+}
+
+/* Botón de Google */
+.google-btn {
+    width: 100%;
+    background: white;
+    color: #000;
+    margin-top: 1rem;
+    font-weight: 600;
+    border-radius: 0.6rem;
+    padding: 0.9rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.google-btn:hover {
+    background: #ffe6ff;
+}

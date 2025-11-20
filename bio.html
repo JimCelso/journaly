@@ -1,29 +1,46 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biografía - Chaneke38</title>
-    <link rel="stylesheet" href="pags.css" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Biografía</title>
+  <link rel="stylesheet" href="pags.css"/>
 </head>
 <body>
-<a href="index.html" class="btn-regresar">⟵ Volver al Inicio</a>
+  <a href="index.html" class="btn-regresar">⟵ Volver al Inicio</a>
+  <h1>Biografía</h1>
+  <div class="section-box">
+    <p id="bioContent">Cargando biografía...</p>
+    <button id="editarBio" style="margin-top:1rem;">Editar biografía</button>
+  </div>
 
-    <h1>Biografía</h1>
+  <script type="module">
+    import { auth } from './firebase-init.js';
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { db } from './firebase-init.js';
 
-    <p>
-        Hola, soy Chaneke38, un morro del 2004 que encontró en el arte, los videojuegos y lo digital una forma de respirar un poquito más libre. Estudio Artes y Comunicación Digital en la UAM Lerma, donde aprendí que crear mundos es una manera de entender el mío.
+    const bioContent = document.getElementById('bioContent');
+    const editarBtn = document.getElementById('editarBio');
 
-        Me gusta explorar lo que siento a través de mis proyectos: desde obras interactivas, mundos 3D y páginas con vibras anime, hasta reflexiones sobre cómo vivimos, cómo nos hieren, cómo crecemos. A veces con estética cyberpunk, otras con un toque glitch, pero siempre siendo yo.
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+        return;
+      }
+      const snap = await getDoc(doc(db, 'users', user.uid));
+      const profile = snap.exists() ? snap.data() : null;
+      bioContent.textContent = profile && profile.bio ? profile.bio : "Aún no has escrito una biografía.";
+    });
 
-        Me inspiran los videojuegos, el anime, y la idea de que incluso una escena o una frase pueden cambiar el día completo. Creo que el arte y la tecnología son espacios donde uno puede reescribirse poco a poco.
-
-        Soy de los que piensan que no importa qué tan oscura se ponga la vida:
-        entre más negra es la noche, más brillan las estrellas.
-
-        Y por eso sigo creando, experimentando, equivocándome, aprendiendo… pero nunca deteniéndome.
-        Este espacio es mi diario, mi refugio digital y mi manera de dejar huella.
-    </p>
-    
+    editarBtn.addEventListener('click', async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+      const nueva = prompt('Escribe tu biografía:', bioContent.textContent === 'Aún no has escrito una biografía.' ? '' : bioContent.textContent);
+      if (nueva === null) return;
+      await setDoc(doc(db, 'users', user.uid), { bio: nueva }, { merge: true });
+      bioContent.textContent = nueva;
+    });
+  </script>
 </body>
 </html>
