@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voces del Día - Chaneke38</title>
+    <link rel="stylesheet" href="pags.css" />
+</head>
+<body>
+    <a href="index.html" class="btn-regresar">⟵ Volver al Inicio</a>
+
+    <h1>Voces del Día</h1>
+    <p>Aquí puedes subir un audio contando cómo te fue hoy, qué sentiste o qué viviste.</p>
+
+    <!-- Formulario para subir audios -->
+    <form id="audioForm">
+        <label for="audioFile">Subir audio del día:</label><br><br>
+
+        <input type="file" id="audioFile" accept="audio/*" required><br><br>
+
+        <label for="descripcion">Descripción (opcional):</label><br>
+        <textarea id="descripcion" rows="3" placeholder="¿De qué trata tu audio hoy?"></textarea><br><br>
+
+        <button type="submit">Guardar</button>
+    </form>
+
+    <hr>
+
+    <h2>Audios guardados</h2>
+    <div id="audioList"></div>
+
+    <script>
+        const form = document.getElementById("audioForm");
+        const audioList = document.getElementById("audioList");
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const fileInput = document.getElementById("audioFile");
+            const desc = document.getElementById("descripcion").value;
+
+            if (!fileInput.files.length) return;
+
+            const file = fileInput.files[0];
+            const url = URL.createObjectURL(file);
+
+            // Crear un contenedor para el nuevo audio
+            const contenedor = document.createElement("div");
+            contenedor.style.marginBottom = "20px";
+
+            // Mostrar descripción si existe
+            if (desc.trim() !== "") {
+                const descripcionTexto = document.createElement("p");
+                descripcionTexto.textContent = desc;
+                contenedor.appendChild(descripcionTexto);
+            }
+
+            // Reproductor del audio
+            const reproductor = document.createElement("audio");
+            reproductor.controls = true;
+            reproductor.src = url;
+
+            contenedor.appendChild(reproductor);
+            audioList.appendChild(contenedor);
+
+            // Resetear formulario
+            fileInput.value = "";
+            document.getElementById("descripcion").value = "";
+        });
+    </script>
+
+</body>
+</html>
