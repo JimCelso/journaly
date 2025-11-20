@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="pags.css" />
 </head>
 <body>
+
     <a href="index.html" class="btn-regresar">⟵ Volver al Inicio</a>
 
     <h1>Pensamientos</h1>
@@ -14,6 +15,24 @@
     <p>
         Este espacio es para ideas más largas, opiniones, reflexiones profundas o cosas que te pasan por la mente.
     </p>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="pensamientos-box">
+
+        <h2>Escribe un nuevo pensamiento</h2>
+
+        <!-- Formulario para escribir -->
+        <textarea id="pensamientoInput" rows="5" placeholder="Escribe aquí lo que estás pensando hoy..."></textarea>
+        <button id="guardarPensamiento">Guardar pensamiento</button>
+
+        <!-- Lista donde aparecen los pensamientos -->
+        <div class="pensamientos-lista" id="listaPensamientos">
+            <!-- Los pensamientos aparecerán aquí -->
+        </div>
+
+    </div>
+
+    <script src="pensamientos.js"></script>
 
 </body>
 </html>

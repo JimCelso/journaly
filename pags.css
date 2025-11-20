@@ -146,3 +146,32 @@ button:hover {
     box-shadow: 0 0 18px rgba(255, 120, 255, 1);
     transform: translateY(-2px);
 }
+
+/* --- CONTENEDOR PARA PENSAMIENTOS DIARIOS --- */
+
+.pensamientos-box {
+    width: 80%;
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 1rem;
+    box-shadow: 0 0 18px rgba(255, 120, 255, 0.35);
+    backdrop-filter: blur(6px);
+    animation: fadeIn 0.8s ease;
+}
+
+.pensamientos-lista {
+    margin-top: 2rem;
+    padding: 1rem;
+    text-align: left;
+}
+
+.pensamiento-item {
+    background: rgba(255, 80, 250, 0.12);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.7rem;
+    box-shadow: 0 0 12px rgba(255, 120, 255, 0.25);
+    animation: fadeIn 0.5s ease;
+}
