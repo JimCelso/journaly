@@ -1,47 +1,61 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configura tu Perfil</title>
-    <link rel="stylesheet" href="pags.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Chaneke38 - Página Personal</title>
+  <link rel="stylesheet" href="pags.css"/>
 </head>
 <body>
+  <header class="header">
+    <h1 class="logo" id="usernameDisplay">Chaneke38</h1>
+    <nav class="nav">
+      <ul>
+        <li><a href="bio.html">Biografía</a></li>
+        <li><a href="voces.html">Voces del día</a></li>
+        <li><a href="pensamientos.html">Pensamientos</a></li>
+        <li><a href="fotos.html">Fotos</a></li>
+        <li><a href="#" id="btnLogout">Cerrar sesión</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<div class="auth-container">
-    <h1>Configura tu Perfil</h1>
+  <main class="main-section">
+    <h2 class="main-title">Puedes usar esta pagina como un diario personal.</h2>
+    <div id="game-container" class="frases-container">
+      <div id="frase" class="frase-text">Cargando frase...</div>
+    </div>
+  </main>
 
-    <input type="text" id="username" placeholder="Nombre de usuario">
-    <textarea id="bio" placeholder="Escribe tu biografía aquí..." style="height:120px;"></textarea>
+  <script type="module">
+    import { auth } from './firebase-init.js';
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { db } from './firebase-init.js';
+    import { logout } from './auth-firebase.js';
 
-    <button onclick="saveProfileInfo()">Guardar y Entrar</button>
+    const usernameEl = document.getElementById('usernameDisplay');
+    const btnLogout = document.getElementById('btnLogout');
 
-    <p id="msg" style="margin-top:15px; color:#ffb3ff;"></p>
-</div>
-
-<script type="module">
-import { saveProfile } from "./profile-firestore.js";
-import { auth } from "./firebase-init.js";
-
-async function saveProfileInfo() {
-    const username = document.getElementById("username").value.trim();
-    const bio = document.getElementById("bio").value.trim();
-    const msg = document.getElementById("msg");
-
-    if (!username || !bio) {
-        msg.textContent = "Llena ambos campos.";
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = 'login.html';
         return;
-    }
+      }
+      const snap = await getDoc(doc(db, 'users', user.uid));
+      const profile = snap.exists() ? snap.data() : null;
+      if (profile && profile.username) usernameEl.textContent = profile.username;
+      else if (user.displayName) usernameEl.textContent = user.displayName;
+      else usernameEl.textContent = user.email.split('@')[0];
+    });
 
-    try {
-        await saveProfile(username, bio);
-        window.location.href = "index.html";
-    } catch (e) {
-        msg.textContent = "Error: " + e.message;
-    }
-}
+    btnLogout.addEventListener('click', async (e) => {
+      e.preventDefault();
+      await logout();
+    });
 
-</script>
-
+    // Import your frases script if you have one
+    import('./script.js').catch(()=>{}); // ignore if missing
+  </script>
 </body>
 </html>

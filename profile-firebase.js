@@ -2,7 +2,9 @@
 import { db, auth } from "./firebase-init.js";
 import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// Guardar perfil (merge: no sobreescribe todo)
+/**
+ * Guarda perfil (merge) del usuario actual.
+ */
 export async function saveProfile(username, bio) {
   const user = auth.currentUser;
   if (!user) throw new Error("No hay usuario autenticado.");
@@ -13,7 +15,9 @@ export async function saveProfile(username, bio) {
   }, { merge: true });
 }
 
-// Cargar perfil
+/**
+ * Carga perfil del usuario actual.
+ */
 export async function loadProfile() {
   const user = auth.currentUser;
   if (!user) throw new Error("No hay usuario autenticado.");

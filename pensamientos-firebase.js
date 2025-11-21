@@ -1,7 +1,17 @@
 // pensamientos-firebase.js
 import { auth, db } from "./firebase-init.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { collection, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import {
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  deleteDoc,
+  doc,
+  getDocs,
+  writeBatch
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const input = document.getElementById("pensamientoInput");
 const botonGuardar = document.getElementById("guardarPensamiento");
@@ -69,7 +79,7 @@ btnBorrarTodo && btnBorrarTodo.addEventListener("click", async () => {
 });
 
 function escapeHtml(t) {
-  const d = document.createElement("div");
+  const d = document.createElement('div');
   d.textContent = t;
   return d.innerHTML;
 }

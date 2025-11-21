@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Iniciar sesión - Journaly</title>
-  <link rel="stylesheet" href="pags.css" />
+  <link rel="stylesheet" href="pags.css"/>
 </head>
 <body>
-
   <div class="auth-container">
     <h1>Iniciar Sesión</h1>
 
@@ -21,46 +20,42 @@
     <p id="msg" style="color:#ffd9ff"></p>
   </div>
 
-<script type="module">
-  import { auth } from './firebase-init.js';
-  import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-  import { db } from './firebase-init.js';
+  <script type="module">
+    import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { auth, db } from './firebase-init.js';
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  const btnLogin = document.getElementById('btnLogin');
-  const btnGoogle = document.getElementById('btnGoogle');
-  const msg = document.getElementById('msg');
+    const btnLogin = document.getElementById('btnLogin');
+    const btnGoogle = document.getElementById('btnGoogle');
+    const msg = document.getElementById('msg');
 
-  btnLogin.addEventListener('click', async () => {
-    msg.textContent = '';
-    const email = document.getElementById('email').value;
-    const pass = document.getElementById('password').value;
-    try {
-      const cred = await signInWithEmailAndPassword(auth, email, pass);
-      // opcional: comprobar si tiene perfil
-      const snap = await getDoc(doc(db, 'users', cred.user.uid));
-      window.location.href = snap.exists() ? 'index.html' : 'profile-setup.html';
-    } catch (e) {
-      msg.textContent = e.message;
-      console.error(e);
-    }
-  });
+    btnLogin.addEventListener('click', async () => {
+      msg.textContent = '';
+      const email = document.getElementById('email').value;
+      const pass = document.getElementById('password').value;
+      try {
+        const cred = await signInWithEmailAndPassword(auth, email, pass);
+        const snap = await getDoc(doc(db, 'users', cred.user.uid));
+        window.location.href = snap.exists() ? 'index.html' : 'profile-setup.html';
+      } catch (e) {
+        msg.textContent = e.message;
+        console.error(e);
+      }
+    });
 
-  btnGoogle.addEventListener('click', async () => {
-    msg.textContent = '';
-    try {
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      // Si el perfil no existe puedes mandar a profile-setup (opcional)
-      const snap = await getDoc(doc(db, 'users', user.uid));
-      window.location.href = snap.exists() ? 'index.html' : 'profile-setup.html';
-    } catch (e) {
-      msg.textContent = e.message;
-      console.error(e);
-    }
-  });
-</script>
-
+    btnGoogle.addEventListener('click', async () => {
+      msg.textContent = '';
+      try {
+        const provider = new GoogleAuthProvider();
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        const snap = await getDoc(doc(db, 'users', user.uid));
+        window.location.href = snap.exists() ? 'index.html' : 'profile-setup.html';
+      } catch (e) {
+        msg.textContent = e.message;
+        console.error(e);
+      }
+    });
+  </script>
 </body>
 </html>
