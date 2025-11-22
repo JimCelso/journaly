@@ -1,33 +1,45 @@
 // auth-firebase.js
-import { auth } from "./firebase-init.js";
+import { auth, db } from "./firebase-init.js";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
   signOut,
   updateProfile
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
-const googleProvider = new GoogleAuthProvider();
+import {
+  doc,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-export async function register(email, password) {
-  return createUserWithEmailAndPassword(auth, email, password);
+
+// ------------ SIGNUP ------------
+export async function signup(username, email, password) {
+  // Crear usuario en Auth
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  const user = userCredential.user;
+
+  // Guardar nombre en el perfil
+  await updateProfile(user, { displayName: username });
+
+  // Guardar en Firestore
+  await setDoc(doc(db, "users", user.uid), {
+    username: username,
+    email: email,
+    createdAt: new Date()
+  });
+
+  return user;
 }
 
+
+// ------------ LOGIN ------------
 export async function login(email, password) {
-  return signInWithEmailAndPassword(auth, email, password);
+  return await signInWithEmailAndPassword(auth, email, password);
 }
 
-export async function googleSignIn() {
-  return signInWithPopup(auth, googleProvider);
-}
 
+// ------------ LOGOUT ------------
 export async function logout() {
-  return signOut(auth);
+  return await signOut(auth);
 }
-
-export async function setDisplayName(user, name) {
-  return updateProfile(user, { displayName: name });
-}
-

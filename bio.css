@@ -1,0 +1,94 @@
+body {
+  margin: 0;
+  background: #0a0a0a;
+  color: #eaeaea;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Header */
+.header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(150, 70, 255, 0.25);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 22px;
+  color: #c085ff;
+  text-shadow: 0 0 8px rgba(180, 90, 255, 0.4);
+}
+
+.nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.nav a {
+  color: #bca8ff;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.nav a:hover {
+  color: #fff;
+  text-shadow: 0 0 8px #b27bff;
+}
+
+/* BIO PAGE */
+.bio-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.title {
+  font-size: 26px;
+  color: #d8bcff;
+  margin-bottom: 20px;
+}
+
+.bio-textarea {
+  width: 100%;
+  height: 300px;
+  background: #111;
+  border: 1px solid rgba(150, 70, 255, 0.3);
+  color: #eaeaea;
+  padding: 15px;
+  font-size: 16px;
+  outline: none;
+  border-radius: 10px;
+  resize: none;
+  box-shadow: 0 0 10px rgba(150, 70, 255, 0.15);
+}
+
+.bio-textarea:focus {
+  border-color: #bb7aff;
+  box-shadow: 0 0 12px rgba(187, 122, 255, 0.4);
+}
+
+.btn-save {
+  margin-top: 15px;
+  padding: 12px 20px;
+  background: #8f4aff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.2s;
+  box-shadow: 0 0 10px rgba(150, 70, 255, 0.4);
+}
+
+.btn-save:hover {
+  background: #a96bff;
+  box-shadow: 0 0 14px rgba(180, 90, 255, 0.55);
+}
+
+.status {
+  margin-top: 10px;
+  color: #b989ff;
+  font-size: 15px;
+}

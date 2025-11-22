@@ -2,81 +2,28 @@
 <html lang="es">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Crear cuenta - Journaly</title>
-  <link rel="stylesheet" href="pags.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Crear Cuenta - Chaneke38</title>
+  <link rel="stylesheet" href="login.css"/>
 </head>
 <body>
-  <div class="auth-container">
-    <h1>Crear Cuenta</h1>
 
-    <input id="username" type="text" placeholder="Nombre de usuario" />
-    <input id="email" type="email" placeholder="Correo electrónico" />
-    <input id="password" type="password" placeholder="Contraseña (mín 6)" />
-    <textarea id="bioInput" rows="4" placeholder="Biografía (opcional)"></textarea>
+  <div class="login-container">
+    <h1 class="title">Crear Cuenta</h1>
 
-    <button id="btnSignup">Registrarme</button>
-    <button id="btnGoogle" class="google-btn">Registrarme con Google</button>
+    <form id="signupForm">
+  <input type="text" id="username" placeholder="Nombre de usuario" required>
+  <input type="email" id="email" placeholder="Correo electrónico" required>
+  <input type="password" id="password" placeholder="Contraseña" required>
+  <button type="submit" class="btn">Registrarse</button>
+</form>
 
-    <p class="auth-link">¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
-    <p id="msg" style="color:#ffd9ff"></p>
+
+    <p class="alt">¿Ya tienes cuenta? <a href="login.html">Iniciar sesión</a></p>
+    <p id="errorMsg" class="error"></p>
   </div>
 
-  <script type="module">
-    import { createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { auth, db } from './firebase-init.js';
-    import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    const btnSignup = document.getElementById('btnSignup');
-    const btnGoogle = document.getElementById('btnGoogle');
-    const msg = document.getElementById('msg');
-
-    btnSignup.addEventListener('click', async () => {
-      msg.textContent = '';
-      const username = document.getElementById('username').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const pass = document.getElementById('password').value;
-      const bio = document.getElementById('bioInput').value.trim();
-
-      if (!username || !email || pass.length < 6) {
-        msg.textContent = 'Completa los campos y usa una contraseña de al menos 6 caracteres.';
-        return;
-      }
-
-      try {
-        const cred = await createUserWithEmailAndPassword(auth, email, pass);
-        await updateProfile(cred.user, { displayName: username });
-        await setDoc(doc(db, 'users', cred.user.uid), {
-          username,
-          email,
-          bio,
-          createdAt: new Date().toISOString()
-        });
-        window.location.href = 'index.html';
-      } catch (e) {
-        msg.textContent = e.message;
-        console.error(e);
-      }
-    });
-
-    btnGoogle.addEventListener('click', async () => {
-      msg.textContent = '';
-      try {
-        const provider = new GoogleAuthProvider();
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-        await setDoc(doc(db, 'users', user.uid), {
-          username: user.displayName || (user.email ? user.email.split('@')[0] : 'Usuario'),
-          email: user.email,
-          bio: '',
-          createdAt: new Date().toISOString()
-        }, { merge: true });
-        window.location.href = 'profile-setup.html';
-      } catch (e) {
-        msg.textContent = e.message;
-        console.error(e);
-      }
-    });
-  </script>
+  <script type="module" src="firebase-init.js"></script>
+  <script type="module" src="signup.js"></script>
 </body>
 </html>

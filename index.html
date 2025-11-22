@@ -2,13 +2,17 @@
 <html lang="es">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Chaneke38 - Página Personal</title>
-  <link rel="stylesheet" href="pags.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Tu Diario – Página Principal</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <header class="header">
-    <h1 class="logo" id="usernameDisplay">Chaneke38</h1>
+    <h1 class="logo" id="usernameDisplay">Cargando...</h1>
+
     <nav class="nav">
       <ul>
         <li><a href="bio.html">Biografía</a></li>
@@ -21,41 +25,20 @@
   </header>
 
   <main class="main-section">
-    <h2 class="main-title">Puedes usar esta pagina como un diario personal.</h2>
+    <h2 class="main-title">Puedes usar esta página como tu diario personal.</h2>
+
     <div id="game-container" class="frases-container">
       <div id="frase" class="frase-text">Cargando frase...</div>
     </div>
   </main>
 
-  <script type="module">
-    import { auth } from './firebase-init.js';
-    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-    import { db } from './firebase-init.js';
-    import { logout } from './auth-firebase.js';
+<!-- Scripts -->
+  <script type="module" src="firebase-init.js"></script>
+  <script type="module" src="auth-firebase.js"></script>  
+  <script type="module" src="guards.js"></script>
+  <script type="module" src="index.js"></script>
+  <script src="script.js"></script>
+ 
 
-    const usernameEl = document.getElementById('usernameDisplay');
-    const btnLogout = document.getElementById('btnLogout');
-
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        window.location.href = 'login.html';
-        return;
-      }
-      const snap = await getDoc(doc(db, 'users', user.uid));
-      const profile = snap.exists() ? snap.data() : null;
-      if (profile && profile.username) usernameEl.textContent = profile.username;
-      else if (user.displayName) usernameEl.textContent = user.displayName;
-      else usernameEl.textContent = user.email.split('@')[0];
-    });
-
-    btnLogout.addEventListener('click', async (e) => {
-      e.preventDefault();
-      await logout();
-    });
-
-    // Import your frases script if you have one
-    import('./script.js').catch(()=>{}); // ignore if missing
-  </script>
 </body>
 </html>
