@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Crear Cuenta - Chaneke38</title>
+  <title>Crear Cuenta</title>
   <link rel="stylesheet" href="login.css"/>
 </head>
 <body>
@@ -12,18 +12,20 @@
     <h1 class="title">Crear Cuenta</h1>
 
     <form id="signupForm">
-  <input type="text" id="username" placeholder="Nombre de usuario" required>
-  <input type="email" id="email" placeholder="Correo electrónico" required>
-  <input type="password" id="password" placeholder="Contraseña" required>
-  <button type="submit" class="btn">Registrarse</button>
-</form>
-
+      <input type="text" id="username" placeholder="Nombre de usuario" required>
+      <input type="email" id="email" placeholder="Correo electrónico" required>
+      <input type="password" id="password" placeholder="Contraseña" required>
+      <button type="submit" class="btn">Registrarse</button>
+    </form>
 
     <p class="alt">¿Ya tienes cuenta? <a href="login.html">Iniciar sesión</a></p>
     <p id="errorMsg" class="error"></p>
   </div>
 
+  <!-- IMPORTS NECESARIOS -->
   <script type="module" src="firebase-init.js"></script>
+  <script type="module" src="auth-firebase.js"></script>
   <script type="module" src="signup.js"></script>
+
 </body>
 </html>

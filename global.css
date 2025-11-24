@@ -1,0 +1,278 @@
+/* --------------------------
+   ESTILOS GENERALES
+--------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: #0a0a0a;
+  color: #eaeaea;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* --------------------------
+   CONTENEDORES GENERALES
+--------------------------- */
+
+.container,
+.login-container,
+.bio-container {
+  width: 95%;
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* --------------------------
+   HEADER
+--------------------------- */
+
+.header {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(150, 70, 255, 0.25);
+}
+
+.username {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* NAV */
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav a {
+  color: #bca8ff;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.nav a:hover {
+  color: #fff;
+}
+
+/* --------------------------
+   TEXTAREA / INPUTS
+--------------------------- */
+
+.bio-textarea,
+input,
+textarea {
+  width: 100%;
+  padding: 12px;
+  background: #111;
+  border: 1px solid rgba(150, 70, 255, 0.3);
+  border-radius: 10px;
+  color: #fff;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+/* --------------------------
+   BOTONES
+--------------------------- */
+
+button,
+.btn-save,
+.btn,
+.btn-actualizar {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 15px;
+  font-size: 17px;
+  cursor: pointer;
+  background: #8f4aff;
+  color: white;
+  box-shadow: 0 0 10px rgba(150, 70, 255, 0.4);
+  transition: 0.2s ease;
+}
+
+button:hover {
+  background: #a96bff;
+}
+
+/* --------------------------
+   POPUP RESPONSIVO
+--------------------------- */
+.popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #4CAF50;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 16px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: 0.3s ease;
+  z-index: 9999;
+}
+
+.popup.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --------------------------
+   RESPONSIVO PARA CELULAR
+--------------------------- */
+@media (max-width: 768px) {
+
+  .header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .username {
+    font-size: 18px;
+  }
+
+  .nav ul {
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .nav a {
+    font-size: 14px;
+  }
+
+  /* textareas más cómodas */
+  .bio-textarea {
+    height: 220px;
+    font-size: 15px;
+  }
+
+  /* botones más grandes */
+  .btn-save,
+  .btn,
+  .btn-actualizar {
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  .popup {
+    right: 50%;
+    transform: translateX(50%) translateY(-10px);
+    font-size: 14px;
+    width: 90%;
+    text-align: center;
+  }
+
+}
+
+/* --------------------------
+   RESPONSIVE PARA CELULAR PEQUEÑO
+--------------------------- */
+@media (max-width: 480px) {
+
+  .username {
+    font-size: 16px;
+  }
+
+  .nav ul {
+    gap: 10px;
+  }
+
+  .nav a {
+    font-size: 13px;
+  }
+
+  input,
+  textarea {
+    font-size: 14px;
+  }
+
+  .btn-save,
+  .btn,
+  .btn-actualizar {
+    font-size: 15px;
+  }
+
+}
+
+/* --------------------------
+   MENU HAMBURGUESA
+--------------------------- */
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+.hamburger span {
+  width: 28px;
+  height: 3px;
+  background: #c085ff;
+  border-radius: 5px;
+  transition: 0.3s ease;
+}
+
+/* Animación al activar */
+.hamburger.active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Ocultar menú en móvil al inicio */
+.nav {
+  transition: 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    width: 70%;
+    background: rgba(20, 20, 20, 0.96);
+    border-left: 1px solid rgba(150, 70, 255, 0.3);
+    border-bottom: 1px solid rgba(150, 70, 255, 0.3);
+    backdrop-filter: blur(6px);
+    padding: 20px 0;
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .nav.show {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .nav a {
+    font-size: 18px;
+  }
+}

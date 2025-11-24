@@ -1,28 +1,38 @@
+// guards.js
 import { auth, db } from "./firebase-init.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
-const usernameEl = document.getElementById("usernameDisplay");
+import {
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
+document.addEventListener("DOMContentLoaded", () => {
+  const usernameEl = document.getElementById("usernameDisplay");
 
-  // Solo mostrar nombre
-  if (usernameEl) {
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.href = "login.html";
+      return;
+    }
+
     try {
       const ref = doc(db, "users", user.uid);
       const snap = await getDoc(ref);
 
+      let username =
+        user.displayName ||
+        (user.email ? user.email.split("@")[0] : "Usuario");
+
       if (snap.exists() && snap.data().username) {
-        usernameEl.textContent = snap.data().username;
-      } else {
-        usernameEl.textContent = user.email.split("@")[0];
+        username = snap.data().username;
       }
-    } catch (e) {
-      console.error("Error cargando username:", e);
+
+      if (usernameEl) usernameEl.textContent = username;
+    } catch (err) {
+      console.error("Error cargando username:", err);
     }
-  }
+  });
 });

@@ -92,3 +92,24 @@ body {
   color: #b989ff;
   font-size: 15px;
 }
+
+.popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  transform: translateY(-15px);
+  z-index: 9999;
+}
+
+.popup.show {
+  opacity: 1;
+  transform: translateY(0);
+}

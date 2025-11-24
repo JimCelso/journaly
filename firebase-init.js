@@ -1,12 +1,25 @@
 // firebase-init.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+// Importar Firebase App
+import { initializeApp } from 
+  "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+
+// Importar Auth
+import { 
+  getAuth 
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+// Importar Firestore
 import {
-  initializeFirestore,
-  persistentLocalCache,
-  persistentSingleTabManager
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
+
+// ⚠️ CONFIGURACIÓN DE TU PROYECTO FIREBASE
+// (ESTO VIENE DE TU firebaseConfig)
 const firebaseConfig = {
   apiKey: "AIzaSyAKg-wwIf3LSG0ffS-jdyIN8OXUCeaNcmM",
   authDomain: "diario-personal-883e2.firebaseapp.com",
@@ -16,14 +29,12 @@ const firebaseConfig = {
   appId: "1:1028474749798:web:8d921c7a143ada064efea7",
   measurementId: "G-173L5VZXRY"
 };
-
+// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 
-// 🔥 Firestore con persistencia estable (evita "client offline")
-export const db = initializeFirestore(app, {
-  localCache: persistentLocalCache({
-    tabManager: persistentSingleTabManager()
-  })
-});
+// Exportar servicios
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-export const auth = getAuth(app);
+// Exportar funciones necesarias para CRUD
+export { auth, db, doc, getDoc, setDoc };
