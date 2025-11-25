@@ -115,3 +115,18 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+/* --------------------------
+   RESPONSIVO PARA CELULAR
+--------------------------- */
+@media (max-width: 768px) {
+  .main-container {
+    margin: 20px;
+    padding: 15px;
+  }
+
+  .photo-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+  }
+}
+    
