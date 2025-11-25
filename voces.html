@@ -1,73 +1,58 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voces del Día - Chaneke38</title>
-    <link rel="stylesheet" href="pags.css" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Voces del día</title>
+
+  <link rel="stylesheet" href="voces.css">
+  <link rel="stylesheet" href="global.css">
 </head>
+
 <body>
-    <a href="index.html" class="btn-regresar">⟵ Volver al Inicio</a>
+<header class="header">
+  <h1 id="usernameDisplay" class="username">Cargando...</h1>
 
-    <h1>Voces del Día</h1>
-    <p>Aquí puedes subir un audio contando cómo te fue hoy, qué sentiste o qué viviste.</p>
+  <!-- Botón Hamburguesa -->
+  <div class="hamburger" id="hamburgerBtn">
+    <span></span><span></span><span></span>
+  </div>
 
-    <!-- Formulario para subir audios -->
-    <form id="audioForm">
-        <label for="audioFile">Subir audio del día:</label><br><br>
+  <!-- Menú móvil -->
+  <nav class="nav" id="mobileMenu">
+    <ul class="nav-list">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="bio.html">Biografía</a></li>
+      <li><a href="voces.html">Voces</a></li>
+      <li><a href="pensamientos.html">Pensamientos</a></li>
+      <li><a href="fotos.html">Fotos</a></li>
+      <li><a href="#" id="btnLogout" class="logout-btn">Cerrar sesión</a></li>
+    </ul>
+  </nav>
+</header>
 
-        <input type="file" id="audioFile" accept="audio/*" required><br><br>
+  <main class="voice-container">
 
-        <label for="descripcion">Descripción (opcional):</label><br>
-        <textarea id="descripcion" rows="3" placeholder="¿De qué trata tu audio hoy?"></textarea><br><br>
+    <h2 class="title">Voces del Día</h2>
 
-        <button type="submit">Guardar</button>
-    </form>
+    <!-- 🔴 GRABAR -->
+    <div class="record-box">
+      <button id="recordBtn" class="btn-record">🎤 Iniciar Grabación</button>
+      <p id="recordStatus" class="status"></p>
+    </div>
 
-    <hr>
+    <!-- 📤 SUBIR ARCHIVO -->
+    <div class="upload-box">
+      <input type="file" id="audioUpload" accept="audio/*">
+      <button id="uploadBtn" class="btn-upload">Subir Audio</button>
+    </div>
 
-    <h2>Audios guardados</h2>
-    <div id="audioList"></div>
+    <!-- LISTA -->
+    <ul id="voiceList" class="voice-list"></ul>
 
-    <script>
-        const form = document.getElementById("audioForm");
-        const audioList = document.getElementById("audioList");
+  </main>
 
-        form.addEventListener("submit", (e) => {
-            e.preventDefault();
-
-            const fileInput = document.getElementById("audioFile");
-            const desc = document.getElementById("descripcion").value;
-
-            if (!fileInput.files.length) return;
-
-            const file = fileInput.files[0];
-            const url = URL.createObjectURL(file);
-
-            // Crear un contenedor para el nuevo audio
-            const contenedor = document.createElement("div");
-            contenedor.style.marginBottom = "20px";
-
-            // Mostrar descripción si existe
-            if (desc.trim() !== "") {
-                const descripcionTexto = document.createElement("p");
-                descripcionTexto.textContent = desc;
-                contenedor.appendChild(descripcionTexto);
-            }
-
-            // Reproductor del audio
-            const reproductor = document.createElement("audio");
-            reproductor.controls = true;
-            reproductor.src = url;
-
-            contenedor.appendChild(reproductor);
-            audioList.appendChild(contenedor);
-
-            // Resetear formulario
-            fileInput.value = "";
-            document.getElementById("descripcion").value = "";
-        });
-    </script>
-
+  <script type="module" src="firebase-init.js"></script>
+  <script type="module" src="voces.js"></script>
 </body>
 </html>

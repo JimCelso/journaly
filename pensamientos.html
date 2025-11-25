@@ -1,40 +1,65 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pensamientos - Chaneke38</title>
-    <link rel="stylesheet" href="pags.css" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Pensamientos – Tu Diario</title>
+
+  <link rel="stylesheet" href="pensamientos.css" />
+  <link rel="stylesheet" href="global.css" />
 </head>
+
 <body>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Pensamientos - Chaneke38</title>
-  <link rel="stylesheet" href="pags.css" />
-</head>
-<body>
-  <a href="index.html" class="btn-regresar">⟵ Volver al Inicio</a>
 
-  <header class="section-box" style="display:flex; justify-content:space-between; align-items:center;">
-    <h1>Pensamientos</h1>
-    <div>
-      <span id="userEmail"></span>
-      <button id="btnLogout" style="margin-left:1rem;">Cerrar sesión</button>
-    </div>
-  </header>
+<header class="header">
+  <h1 id="usernameDisplay" class="username">Cargando...</h1>
 
-  <main class="pensamientos-box">
-    <h2>Escribe un nuevo pensamiento</h2>
-    <textarea id="pensamientoInput" rows="5" placeholder="Escribe aquí lo que estás pensando hoy..."></textarea>
-    <button id="guardarPensamiento">Guardar pensamiento</button>
-    <button id="borrarTodo" style="background:rgba(255,80,250,0.4); margin-top:0.6rem;">Borrar todo</button>
+  <!-- Botón Hamburguesa -->
+  <div class="hamburger" id="hamburgerBtn">
+    <span></span><span></span><span></span>
+  </div>
 
-    <div class="pensamientos-lista" id="listaPensamientos"></div>
-  </main>
+  <!-- Menú móvil -->
+  <nav class="nav" id="mobileMenu">
+    <ul class="nav-list">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="bio.html">Biografía</a></li>
+      <li><a href="voces.html">Voces</a></li>
+      <li><a href="pensamientos.html">Pensamientos</a></li>
+      <li><a href="fotos.html">Fotos</a></li>
+      <li><a href="#" id="btnLogout" class="logout-btn">Cerrar sesión</a></li>
+    </ul>
+  </nav>
+</header>
 
-  <script type="module" src="pensamientos-firebase.js"></script>
+<div id="successPopup" class="popup">✓ Pensamiento guardado</div>
+
+<main class="pens-container">
+  <h2 class="title">Tus Pensamientos</h2>
+
+  <textarea id="pensInput" class="pens-textarea" placeholder="Escribe algo que quieras guardar..."></textarea>
+
+  <button id="btnSavePens" class="btn-save">Guardar</button>
+
+  <h3>Historial</h3>
+  <ul id="pensList" class="pens-list">Cargando...</ul>
+</main>
+
+<!-- Scripts -->
+<script type="module" src="firebase-init.js"></script>
+<script type="module" src="auth-firebase.js"></script>
+<script type="module" src="pensamientos.js"></script>
+
+<script>
+  // Hamburguesa
+  const hamburger = document.getElementById("hamburgerBtn");
+  const menu = document.getElementById("mobileMenu");
+
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    menu.classList.toggle("show");
+  });
+</script>
+
 </body>
 </html>
