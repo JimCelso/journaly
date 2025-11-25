@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fotos y Videos</title>
+  <link rel="stylesheet" href="fotos.css" />
+  <link rel="stylesheet" href="global.css" />
+</head>
+
+<body>
+
+  <header class="header">
+    <h1 class="logo" id="usernameDisplay">Cargando...</h1>
+
+    <!-- Botón Hamburguesa -->
+  <div class="hamburger" id="hamburgerBtn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Menú móvil -->
+  <nav class="nav" id="mobileMenu">
+    <ul class="nav-list">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="voces.html">Voces del día</a></li>
+      <li><a href="pensamientos.html">Pensamientos</a></li>
+      <li><a href="fotos.html">Fotos</a></li>
+      <li><a href="#" id="btnLogout" class="logout-btn">Cerrar sesión</a></li>
+    </ul>
+  </nav>
+  </header>
+
+  <main class="main-section">
+
+    <h2 class="main-title">Fotos y Videos</h2>
+
+    <!-- Subir archivo -->
+    <input type="file" id="mediaInput" accept="image/*,video/*" />
+    <button id="btnUpload" class="upload-btn">Subir Archivo</button>
+
+    <div id="successPopup" class="popup">¡Archivo subido con éxito!</div>
+
+    <h3>Galería</h3>
+    <div id="gallery" class="gallery">
+      <p>Cargando...</p>
+    </div>
+  </main>
+
+  <!-- Modal -->
+  <div id="viewer" class="viewer hidden">
+    <span id="viewerClose" class="close-btn">✖</span>
+    <img id="viewerImg" class="viewer-media" />
+    <video id="viewerVideo" class="viewer-media" controls></video>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="firebase-init.js"></script>
+  <script type="module" src="auth-firebase.js"></script>
+  <script type="module" src="guards.js"></script>
+  <script type="module" src="fotos.js"></script>
+
+  <script>
+  // Hamburguesa
+  const hamburger = document.getElementById("hamburgerBtn");
+  const menu = document.getElementById("mobileMenu");
+
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    menu.classList.toggle("show");
+  });
+</script>
+
+</body>
+</html>

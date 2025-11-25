@@ -1,0 +1,170 @@
+/* GENERAL */
+body {
+  background: #0e0e0e;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  padding: 15px;
+  background: #161616;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  margin: 0;
+}
+
+/* MENU */
+.nav .menu-icon {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav a {
+  color: white;
+  text-decoration: none;
+}
+
+/* MOBILE MENU */
+@media (max-width: 700px) {
+  .nav .menu-icon {
+    display: block;
+  }
+
+  .nav ul {
+    position: absolute;
+    top: 60px;
+    right: -200px;
+    background: #1c1c1c;
+    width: 180px;
+    flex-direction: column;
+    padding: 20px;
+    transition: 0.3s;
+  }
+
+  #menu-toggle:checked ~ ul {
+    right: 0;
+  }
+}
+
+/* MAIN */
+.main-section {
+  padding: 20px;
+}
+
+.upload-btn {
+  background: #00bcd4;
+  color: black;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  border: none;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* GALERÍA */
+.gallery {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.gallery-item {
+  background: #222;
+  padding: 6px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.gallery-item img,
+.gallery-item video {
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* POPUP */
+.popup {
+  opacity: 0;
+  background: #00e676;
+  color: black;
+  padding: 10px 20px;
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: 0.4s;
+}
+
+.popup.show {
+  opacity: 1;
+}
+
+/* MODAL VIEWER */
+.viewer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.viewer-media {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.hidden {
+  display: none;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.gallery-item {
+  position: relative;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(0,0,0,0.7);
+  border: none;
+  color: white;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.delete-btn:hover {
+  background: red;
+}
+
+    
