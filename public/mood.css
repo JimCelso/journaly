@@ -1,0 +1,115 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: #0e0e0e;
+  color: #f1f1f1;
+}
+
+/* Header */
+.header {
+  padding: 20px;
+  background: #121212;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #333;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Hamburger */
+.hamburger {
+  width: 30px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger span {
+  height: 4px;
+  width: 100%;
+  background: white;
+  border-radius: 5px;
+}
+
+/* Navigation menu */
+.nav {
+  position: absolute;
+  top: 70px;
+  right: 0;
+  width: 200px;
+  background: #181818;
+  padding: 15px;
+  flex-direction: column;
+  display: none;
+}
+
+.nav a {
+  display: block;
+  color: white;
+  padding: 10px 0;
+  text-decoration: none;
+}
+
+.nav a:hover {
+  color: #6aa6ff;
+}
+
+.nav.show {
+  display: flex;
+}
+
+/* Content */
+.container {
+  padding: 20px;
+}
+
+.label {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+select,
+textarea,
+input[type="color"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #1c1c1c;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+textarea {
+  height: 120px;
+  resize: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #6aa6ff;
+  border: none;
+  border-radius: 8px;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #8cbaff;
+}
+
+#statusMessage {
+  margin-top: 15px;
+  text-align: center;
+  color: #6aa6ff;
+  font-size: 14px;
+}

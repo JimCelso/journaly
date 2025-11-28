@@ -1,31 +1,22 @@
-/* GENERAL */
+/* ======== ESTILO GENERAL ======== */
 body {
-  background: #0e0e0e;
-  color: white;
-  font-family: "Poppins", sans-serif;
   margin: 0;
   padding: 0;
+  background: #0a0a0a;
+  font-family: "Poppins", sans-serif;
+  color: #fff;
 }
 
+/* ======== HEADER ======== */
 .header {
   padding: 15px;
-  background: #161616;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(150, 70, 255, 0.25);
 }
 
-.logo {
-  margin: 0;
-}
-
-/* MENU */
-.nav .menu-icon {
-  display: none;
-  font-size: 28px;
-  cursor: pointer;
-}
-
+/* NAV */
 .nav ul {
   list-style: none;
   display: flex;
@@ -33,138 +24,120 @@ body {
 }
 
 .nav a {
-  color: white;
+  color: #bca8ff;
   text-decoration: none;
+  font-size: 15px;
 }
 
-/* MOBILE MENU */
-@media (max-width: 700px) {
-  .nav .menu-icon {
-    display: block;
-  }
-
-  .nav ul {
-    position: absolute;
-    top: 60px;
-    right: -200px;
-    background: #1c1c1c;
-    width: 180px;
-    flex-direction: column;
-    padding: 20px;
-    transition: 0.3s;
-  }
-
-  #menu-toggle:checked ~ ul {
-    right: 0;
-  }
+.nav a:hover {
+  color: #fff;
 }
 
-/* MAIN */
-.main-section {
+.header {
   padding: 20px;
+  text-align: center;
+  background: #111;
+  border-bottom: 1px solid #222;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+/* ======== CONTROLES DE FOTO ======== */
+.photo-controls {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #222;
 }
 
 .upload-btn {
-  background: #00bcd4;
-  color: black;
-  padding: 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
+  display: inline-block;
+  margin: 5px;
+  padding: 12px 20px;
+  background-color: #ff2f9e;
+  color: white;
   border: none;
-  width: 100%;
-  margin-top: 10px;
-}
-
-/* GALERÍA */
-.gallery {
-  margin-top: 20px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 12px;
-}
-
-.gallery-item {
-  background: #222;
-  padding: 6px;
   border-radius: 10px;
   cursor: pointer;
+  font-size: 15px;
+  transition: background .2s;
 }
 
-.gallery-item img,
-.gallery-item video {
-  width: 100%;
-  border-radius: 8px;
+.upload-btn:hover {
+  background-color: #ff47ad;
 }
 
-/* POPUP */
-.popup {
-  opacity: 0;
-  background: #00e676;
-  color: black;
-  padding: 10px 20px;
-  position: fixed;
-  top: 15px;
-  right: 15px;
-  border-radius: 8px;
-  font-weight: bold;
-  transition: 0.4s;
-}
-
-.popup.show {
-  opacity: 1;
-}
-
-/* MODAL VIEWER */
-.viewer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.92);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.viewer-media {
-  max-width: 90%;
-  max-height: 90%;
-}
-
-.hidden {
+#uploadInput {
   display: none;
 }
 
-.close-btn {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 28px;
-  cursor: pointer;
+#cameraPreview {
+  margin-top: 10px;
+  max-width: 100%;
+  border-radius: 10px;
 }
 
-.gallery-item {
-  position: relative;
+/* ======== GALERÍA ======== */
+.gallery {
+  padding: 20px;
+  column-count: 3;
+  column-gap: 15px;
 }
 
+@media (max-width: 900px) {
+  .gallery {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery {
+    column-count: 1;
+  }
+}
+
+/* ======== TARJETAS ======== */
+.photo-item {
+  width: 100%;
+  margin-bottom: 15px;
+  break-inside: avoid;
+  background: #151515;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #222;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.photo-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.photo-item img {
+  width: 100%;
+  display: block;
+}
+
+/* ======== BORRAR ======== */
 .delete-btn {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background: rgba(0,0,0,0.7);
+  background: #ff3b3b;
+  color: #fff;
+  padding: 8px 12px;
   border: none;
-  color: white;
-  padding: 6px 8px;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background 0.2s;
+  margin: 10px;
+  float: right;
+  font-size: 13px;
+  transition: background .2s;
 }
 
 .delete-btn:hover {
-  background: red;
+  background: #ff5858;
 }
-
-    

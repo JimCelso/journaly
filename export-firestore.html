@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Exportar Firestore</title>
+</head>
+<body>
+<h2>Exportador de Firestore</h2>
+<p>Cuando lo abras, solo da clic en el botón para descargar tu Firestore completo.</p>
+
+<button id="export">Exportar Firestore</button>
+
+<script type="module">
+  // 🔥 1) CONFIGURA TU PROYECTO FIREBASE AQUÍ
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+  apiKey: "AIzaSyAKg-wwIf3LSG0ffS-jdyIN8OXUCeaNcmM",
+  authDomain: "diario-personal-883e2.firebaseapp.com",
+  projectId: "diario-personal-883e2",
+  storageBucket: "diario-personal-883e2.appspot.com",
+  messagingSenderId: "1028474749798",
+  appId: "1:1028474749798:web:8d921c7a143ada064efea7",
+  measurementId: "G-173L5VZXRY"
+};
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  document.querySelector("#export").onclick = async () => {
+    const exportData = {};
+
+    // ⭐ Colección principal: users
+    const usersSnap = await getDocs(collection(db, "users"));
+    exportData.users = [];
+
+    for (const userDoc of usersSnap.docs) {
+      const userData = userDoc.data();
+      const userId = userDoc.id;
+
+      const userObject = {
+        id: userId,
+        ...userData,
+        subcollections: {}
+      };
+
+      // ⭐ Subcolecciones dentro de cada usuario (ej: pensamientos)
+      const subcollections = ["pensamientos"]; // <-- agrega más si tienes más
+
+      for (const sub of subcollections) {
+        const subSnap = await getDocs(collection(db, `users/${userId}/${sub}`));
+        userObject.subcollections[sub] = subSnap.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+      }
+
+      exportData.users.push(userObject);
+    }
+
+    // 📥 Descargar archivo JSON
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData, null, 2));
+    const a = document.createElement('a');
+    a.href = dataStr;
+    a.download = "firestore-export.json";
+    a.click();
+
+    alert("Exportación completa");
+  };
+</script>
+
+</body>
+</html>

@@ -11,6 +11,35 @@ body {
     color: #fff;
 }
 
+/* MENU */
+.side-menu {
+  position: fixed;
+  left: -240px;
+  top: 0;
+  width: 200px;
+  height: 100%;
+  background: #111;
+  padding-top: 60px;
+  transition: 0.3s;
+}
+
+.side-menu.active {
+  left: 0;
+}
+
+.side-menu a {
+  display: block;
+  color: #eaeaea;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.side-menu a:hover,
+.side-menu .active {
+  background: #444;
+}
+
+
 /* Capa oscura para estilo Journally */
 body::after {
     content: "";

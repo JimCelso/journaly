@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estado de Ánimo – Tu Diario</title>
+  <link rel="stylesheet" href="mood.css">
+</head>
+
+<body>
+  <!-- Menú hamburguesa -->
+  <header class="header">
+    <div class="logo">Tu Diario</div>
+
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+
+    <nav class="nav" id="navMenu">
+      <a href="index.html">Inicio</a>
+      <a href="bio.html">Biografía</a>
+      <a href="voces.html">Voces</a>
+      <a href="mood.html">Estado de ánimo</a>
+      <a href="fotos.html">Fotos</a>
+    </nav>
+  </header>
+
+  <!-- Contenido -->
+  <main class="container">
+    <h1>Estado de ánimo del día</h1>
+
+    <label class="label">¿Cómo te sientes hoy?</label>
+    <select id="moodSelect">
+      <option value="">Selecciona uno...</option>
+      <option value="feliz">😄 Feliz</option>
+      <option value="neutral">😐 Neutral</option>
+      <option value="triste">😢 Triste</option>
+      <option value="estres">😰 Estresado</option>
+      <option value="enojado">😡 Enojado</option>
+      <option value="emocionado">🤩 Emocionado</option>
+      <option value="agotado">🥱 Agotado</option>
+    </select>
+
+    <label class="label">¿Algo que quieras recordar de tu día?</label>
+    <textarea id="moodText" placeholder="Escribe aquí..."></textarea>
+
+    <label class="label">Color de tu día</label>
+    <input type="color" id="colorPick" value="#6aa6ff" />
+
+    <button id="saveMood">Guardar registro</button>
+
+    <p id="statusMessage"></p>
+  </main>
+
+  <script type="module" src="mood.js"></script>
+</body>
+</html>

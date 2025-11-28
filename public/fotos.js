@@ -1,146 +1,120 @@
-import { auth, db } from "./firebase-init.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+import { auth, storage } from "./firebase-init.js";
 import {
-  collection, addDoc, getDocs, orderBy, query, deleteDoc, doc
-} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
-import {
-  getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  listAll,
+  deleteObject
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-storage.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
-const storage = getStorage();
-
-const mediaInput = document.getElementById("mediaInput");
-const btnUpload = document.getElementById("btnUpload");
+const uploadInput = document.getElementById("uploadInput");
 const gallery = document.getElementById("gallery");
-const popup = document.getElementById("successPopup");
 
-// Modal
-const viewer = document.getElementById("viewer");
-const viewerImg = document.getElementById("viewerImg");
-const viewerVideo = document.getElementById("viewerVideo");
-const viewerClose = document.getElementById("viewerClose");
+const takePhotoBtn = document.getElementById("takePhotoBtn");
+const cameraPreview = document.getElementById("cameraPreview");
+const captureBtn = document.getElementById("captureBtn");
 
-function showPopup() {
-  popup.classList.add("show");
-  setTimeout(() => popup.classList.remove("show"), 1800);
-}
+let currentUid = null;
 
-// Cerrar modal
-viewerClose.onclick = () => viewer.classList.add("hidden");
-
-// Autenticación
-onAuthStateChanged(auth, async (user) => {
-  if (!user) return (window.location.href = "login.html");
-
-  loadMedia(user.uid);
-
-  btnUpload.addEventListener("click", async () => {
-    if (!mediaInput.files.length) return;
-
-    const file = mediaInput.files[0];
-    const fileName = Date.now() + "_" + file.name;
-    const fileRef = ref(storage, `media/${user.uid}/${fileName}`);
-
-    const uploadTask = uploadBytesResumable(fileRef, file);
-
-    uploadTask.on(
-      "state_changed",
-      () => {},
-      (err) => console.error(err),
-      async () => {
-        const url = await getDownloadURL(uploadTask.snapshot.ref);
-
-        await addDoc(collection(db, "users", user.uid, "media"), {
-          url,
-          nombre: fileName,
-          tipo: file.type.startsWith("video") ? "video" : "image",
-          fecha: new Date(),
-        });
-
-        showPopup();
-        mediaInput.value = "";
-        loadMedia(user.uid);
-      }
-    );
-  });
-});
-
-// ===========================
-// 🔥 CARGAR FOTOS Y VIDEOS
-// ===========================
-async function loadMedia(uid) {
-  gallery.innerHTML = "<p>Cargando...</p>";
-
-  const q = query(
-    collection(db, "users", uid, "media"),
-    orderBy("fecha", "desc")
-  );
-
-  const snap = await getDocs(q);
-  gallery.innerHTML = "";
-
-  if (snap.empty) {
-    gallery.innerHTML = "<p>No has subido nada aún.</p>";
+/* ======== USUARIO LOGUEADO ======== */
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    gallery.innerHTML = "<p style='text-align:center;'>Inicia sesión para ver tus fotos.</p>";
     return;
   }
 
-  snap.forEach((docSnap) => {
-    const data = docSnap.data();
+  currentUid = user.uid;
+  cargarFotos();
+});
 
-    const item = document.createElement("div");
-    item.classList.add("gallery-item");
+/* ======== SUBIR FOTO ======== */
+uploadInput.addEventListener("change", async (e) => {
+  if (!currentUid) return alert("Inicia sesión primero.");
+  const file = e.target.files[0];
+  if (!file) return;
+  subirFoto(file);
+});
 
-    const deleteBtn = document.createElement("button");
-    deleteBtn.classList.add("delete-btn");
-    deleteBtn.textContent = "🗑️";
+/* ======== TOMAR FOTO ======== */
+takePhotoBtn.addEventListener("click", async () => {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    return alert("Tu navegador no soporta cámara.");
+  }
 
-    deleteBtn.onclick = async (e) => {
-      e.stopPropagation();
-      await deleteMedia(uid, docSnap.id, data.nombre);
-      loadMedia(uid);
-    };
+  cameraPreview.style.display = "block";
+  captureBtn.style.display = "inline-block";
 
-    if (data.tipo === "image") {
-      item.innerHTML = `<img src="${data.url}" />`;
-    } else {
-      item.innerHTML = `<video src="${data.url}"></video>`;
-    }
+  const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+  cameraPreview.srcObject = stream;
+});
 
-    item.appendChild(deleteBtn);
+captureBtn.addEventListener("click", async () => {
+  const canvas = document.createElement("canvas");
+  canvas.width = cameraPreview.videoWidth;
+  canvas.height = cameraPreview.videoHeight;
+  canvas.getContext("2d").drawImage(cameraPreview, 0, 0);
 
-    // ABRIR MODAL
-    item.onclick = () => {
-      viewer.classList.remove("hidden");
-
-      if (data.tipo === "image") {
-        viewerImg.src = data.url;
-        viewerImg.style.display = "block";
-        viewerVideo.style.display = "none";
-      } else {
-        viewerVideo.src = data.url;
-        viewerVideo.style.display = "block";
-        viewerImg.style.display = "none";
-      }
-    };
-
-    gallery.appendChild(item);
+  canvas.toBlob(async (blob) => {
+    subirFoto(blob);
   });
+
+  // Detener cámara
+  const stream = cameraPreview.srcObject;
+  stream.getTracks().forEach(track => track.stop());
+  cameraPreview.style.display = "none";
+  captureBtn.style.display = "none";
+});
+
+/* ======== FUNCIONES ======== */
+async function subirFoto(file) {
+  const storageRef = ref(storage, `fotos/${currentUid}/${Date.now()}-${file.name || 'foto.png'}`);
+  const uploadTask = uploadBytesResumable(storageRef, file);
+
+  uploadTask.on(
+    "state_changed",
+    null,
+    (error) => alert("Error al subir: " + error),
+    async () => {
+      const url = await getDownloadURL(uploadTask.snapshot.ref);
+      agregarFoto(url, uploadTask.snapshot.ref.fullPath);
+    }
+  );
 }
 
-// ===========================
-// ❌ ELIMINAR MEDIA
-// ===========================
-async function deleteMedia(uid, docId, fileName) {
+async function cargarFotos() {
+  const folderRef = ref(storage, `fotos/${currentUid}`);
+  gallery.innerHTML = "";
   try {
-    // Borrar Storage
-    const fileRef = ref(storage, `media/${uid}/${fileName}`);
-    await deleteObject(fileRef);
-
-    // Borrar Firestore
-    await deleteDoc(doc(db, "users", uid, "media", docId));
-
-    showPopup();
+    const res = await listAll(folderRef);
+    for (const item of res.items) {
+      const url = await getDownloadURL(item);
+      agregarFoto(url, item.fullPath);
+    }
   } catch (err) {
-    console.error("Error al borrar:", err);
+    console.error(err);
   }
+}
+
+function agregarFoto(url, fullPath) {
+  const div = document.createElement("div");
+  div.classList.add("photo-item");
+
+  div.innerHTML = `
+    <img src="${url}">
+    <button class="delete-btn">Borrar</button>
+  `;
+
+  div.querySelector(".delete-btn").addEventListener("click", async () => {
+    const ok = confirm("¿Eliminar esta foto?");
+    if (!ok) return;
+    try {
+      await deleteObject(ref(storage, fullPath));
+      div.remove();
+    } catch (err) {
+      alert("No se pudo borrar.");
+    }
+  });
+
+  gallery.prepend(div); // Aparece primero en la parte superior de la galería
 }
