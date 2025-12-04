@@ -2,8 +2,8 @@
 <resources>
     <color name="ic_launcher_background">#FFFFFF</color>
     <string name="app_name">Diario Personal</string>
-    <string name="custom_url_scheme">com.tudiario.app</string>
-    <string name="package_name">com.tudiario.app</string>
+    <string name="custom_url_scheme">com.example.app</string>
+    <string name="package_name">com.example.app</string>
     <string name="title_activity_main">Diario Personal</string>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         

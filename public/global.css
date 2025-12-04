@@ -289,9 +289,8 @@ main {
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
     z-index: 10000;
-    /* Allow clicks to reach the document (so click-outside closes menu),
-       but ensure the nav sits above this overlay. */
-    pointer-events: auto;
+    /* Overlay should not capture pointer events so menu links remain clickable. */
+    pointer-events: none;
   }
 }
 

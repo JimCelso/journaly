@@ -1,6 +1,6 @@
 /**
  * Script simple para menú hamburguesa - SIN módulos
- * Se puede usar directamente sin import/export
+ * Optimizado para app nativa en móvil
  */
 
 function initHamburgerMenu() {
@@ -21,19 +21,20 @@ function initHamburgerMenu() {
   console.log("✓ Elementos encontrados");
 
   // Función para alternar menú
-  function toggleMenu() {
+  function toggleMenu(force) {
     const isOpen = hamburger.classList.contains("active");
+    const shouldOpen = force !== undefined ? force : !isOpen;
     
-    if (isOpen) {
-      hamburger.classList.remove("active");
-      mobileMenu.classList.remove("show");
-      document.body.classList.remove("menu-open");
-      console.log("📴 Menú cerrado");
-    } else {
+    if (shouldOpen) {
       hamburger.classList.add("active");
       mobileMenu.classList.add("show");
       document.body.classList.add("menu-open");
       console.log("📱 Menú abierto");
+    } else {
+      hamburger.classList.remove("active");
+      mobileMenu.classList.remove("show");
+      document.body.classList.remove("menu-open");
+      console.log("📴 Menú cerrado");
     }
   }
 
@@ -52,8 +53,11 @@ function initHamburgerMenu() {
   links.forEach((link) => {
     link.addEventListener("click", (e) => {
       if (hamburger.classList.contains("active")) {
-        console.log("🔗 Cerrando menú tras click en enlace");
-        toggleMenu();
+        // No cerrar si es el botón de logout (dejarlo que ejecute su función)
+        if (link.id !== "btnLogout") {
+          console.log("🔗 Cerrando menú tras click en enlace");
+          setTimeout(() => toggleMenu(false), 100);
+        }
       }
     });
   });
@@ -66,7 +70,7 @@ function initHamburgerMenu() {
 
     if (isMenuOpen && !isClickOnHamburger && !isClickOnMenu) {
       console.log("📍 Click fuera, cerrando menú");
-      toggleMenu();
+      toggleMenu(false);
     }
   });
 
@@ -74,7 +78,15 @@ function initHamburgerMenu() {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && hamburger.classList.contains("active")) {
       console.log("⌨️ ESC presionado, cerrando menú");
-      toggleMenu();
+      toggleMenu(false);
+    }
+  });
+
+  // Cerrar menú al cambiar orientación
+  window.addEventListener("orientationchange", () => {
+    if (hamburger.classList.contains("active")) {
+      console.log("📐 Orientación cambió, cerrando menú");
+      toggleMenu(false);
     }
   });
 

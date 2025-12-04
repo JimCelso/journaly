@@ -9,6 +9,26 @@ import {
   ref, uploadBytesResumable, getDownloadURL, deleteObject
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-storage.js";
 
+// Detectar si estamos en Capacitor
+const isCapacitor = typeof (window.capacitor || window.Capacitor) !== "undefined";
+
+// Helper para solicitar permisos en Capacitor (Android)
+async function requestMicrophonePermission() {
+  if (!isCapacitor) return true;
+  
+  try {
+    const { permissions } = await window.Capacitor.Plugins.Permissions.query({ name: "RECORD_AUDIO" });
+    if (permissions !== "granted") {
+      const { permissions: granted } = await window.Capacitor.Plugins.Permissions.request({ name: "RECORD_AUDIO" });
+      return granted === "granted";
+    }
+    return true;
+  } catch (error) {
+    console.warn("No se pudo solicitar permisos de micrófono:", error);
+    return true; // Continuar de todos modos
+  }
+}
+
 
 // HTML elementos
 const fileInput = document.getElementById("audioInput");
@@ -128,25 +148,41 @@ const btnUploadRecorded = document.getElementById("btnUploadRecorded");
 
 // Iniciar grabación
 btnRecord.addEventListener("click", async () => {
-  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  try {
+    // Solicitar permisos en Android
+    const hasPermission = await requestMicrophonePermission();
+    if (!hasPermission) {
+      alert("Se requieren permisos de micrófono para grabar");
+      return;
+    }
 
-  mediaRecorder = new MediaRecorder(stream);
-  recordedChunks = [];
+    // Solicitar acceso al micrófono
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-  mediaRecorder.ondataavailable = (e) => {
-    if (e.data.size > 0) recordedChunks.push(e.data);
-  };
+    mediaRecorder = new MediaRecorder(stream);
+    recordedChunks = [];
 
-  mediaRecorder.onstop = () => {
-    recordedBlob = new Blob(recordedChunks, { type: "audio/webm" });
-    preview.src = URL.createObjectURL(recordedBlob);
-    preview.style.display = "block";
-    btnUploadRecorded.style.display = "block";
-  };
+    mediaRecorder.ondataavailable = (e) => {
+      if (e.data.size > 0) recordedChunks.push(e.data);
+    };
 
-  mediaRecorder.start();
-  btnRecord.style.display = "none";
-  btnStop.style.display = "block";
+    mediaRecorder.onstop = () => {
+      recordedBlob = new Blob(recordedChunks, { type: "audio/webm" });
+      preview.src = URL.createObjectURL(recordedBlob);
+      preview.style.display = "block";
+      btnUploadRecorded.style.display = "block";
+      
+      // Detener tracks del stream
+      stream.getTracks().forEach(track => track.stop());
+    };
+
+    mediaRecorder.start();
+    btnRecord.style.display = "none";
+    btnStop.style.display = "block";
+  } catch (error) {
+    console.error("Error al iniciar grabación:", error);
+    alert("Error al acceder al micrófono. Verifica los permisos.");
+  }
 });
 
 

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.tudiario.app-mergeDebugResources-25:/values-v31/values-v31.xml",
+            "outputFile": "com.example.app-mergeDebugResources-25:/values-v31/values-v31.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\celso\\.gradle\\caches\\8.13\\transforms\\89b34559026d3f346fe6c44fe167a51c\\transformed\\core-splashscreen-1.0.1\\res\\values-v31\\values-v31.xml",
+                    "source": "C:\\Users\\celso\\.gradle\\caches\\8.11.1\\transforms\\ef234481c09f01fb9f0508a5da2b1126\\transformed\\core-splashscreen-1.0.1\\res\\values-v31\\values-v31.xml",
                     "from": {
                         "startLines": "2,9",
                         "startColumns": "4,4",
