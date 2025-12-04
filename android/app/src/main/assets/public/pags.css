@@ -1,0 +1,256 @@
+/* --- ESTILO ANIME + JOURNALLY PARA CHANEKE38 --- */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Fondo general */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: url('fondo-anime.jpg') center/cover fixed no-repeat;
+    color: #fff;
+}
+
+/* Capa oscura para estilo Journally */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    z-index: -1;
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 25px rgba(255, 80, 250, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #ff80ff;
+    text-shadow: 0 0 10px #ff80ff;
+}
+
+/* NAV */
+.nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+.nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 300;
+    transition: 0.3s ease;
+}
+
+.nav a:hover {
+    color: #ffb3ff;
+    text-shadow: 0 0 10px #ff80ff;
+}
+
+/* CONTENIDO GENERAL */
+main, body > h1, body > p {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 0 2rem;
+}
+
+h1, h2 {
+    color: #ffb3ff;
+    text-shadow: 0 0 12px rgba(255, 120, 255, 0.7);
+    animation: fadeIn 1s ease;
+}
+
+p, label, textarea {
+    animation: fadeIn 1.3s ease;
+    font-size: 1.1rem;
+}
+
+/* TARJETAS DE CONTENIDO */
+.section-box {
+    width: 80%;
+    max-width: 900px;
+    margin: 2.5rem auto;
+    padding: 2rem;
+    background: rgba(0,0,0,0.55);
+    border-radius: 1rem;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 20px rgba(255, 80, 250, 0.25);
+}
+
+/* FORMULARIOS */
+input[type="file"], textarea, button {
+    margin-top: 1rem;
+    padding: 0.7rem;
+    border: none;
+    border-radius: 0.5rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    background: #ff80ff;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ffb3ff;
+}
+
+/* ANIMACIONES */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* BOTÓN DE REGRESAR AL INICIO */
+.btn-regresar {
+    display: inline-block;
+    margin: 2rem auto;
+    padding: 0.8rem 1.5rem;
+    background: rgba(255, 80, 250, 0.8);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 0.8rem;
+    box-shadow: 0 0 12px rgba(255, 120, 255, 0.7);
+    backdrop-filter: blur(4px);
+    transition: 0.3s ease;
+}
+
+.btn-regresar:hover {
+    background: #ffb3ff;
+    color: #000;
+    box-shadow: 0 0 18px rgba(255, 120, 255, 1);
+    transform: translateY(-2px);
+}
+
+/* --- CONTENEDOR PARA PENSAMIENTOS DIARIOS --- */
+
+.pensamientos-box {
+    width: 80%;
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 1rem;
+    box-shadow: 0 0 18px rgba(255, 120, 255, 0.35);
+    backdrop-filter: blur(6px);
+    animation: fadeIn 0.8s ease;
+}
+
+.pensamientos-lista {
+    margin-top: 2rem;
+    padding: 1rem;
+    text-align: left;
+}
+
+.pensamiento-item {
+    background: rgba(255, 80, 250, 0.12);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.7rem;
+    box-shadow: 0 0 12px rgba(255, 120, 255, 0.25);
+    animation: fadeIn 0.5s ease;
+}
+
+/* --- ESTILO PARA LOGIN, SIGNUP Y PROFILE-SETUP --- */
+
+.auth-container {
+    width: 90%;
+    max-width: 450px;
+    margin: 5rem auto;
+    padding: 2.5rem;
+    background: rgba(0,0,0,0.55);
+    border-radius: 1.2rem;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 25px rgba(255, 80, 250, 0.35);
+    animation: fadeIn 0.8s ease;
+    text-align: center;
+}
+
+.auth-container h1,
+.auth-container h2 {
+    margin-bottom: 1.5rem;
+}
+
+.auth-container input {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 0.6rem;
+    margin-top: 1rem;
+    outline: none;
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.auth-container button {
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 0.9rem;
+    border: none;
+    border-radius: 0.6rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: #ff80ff;
+    color: #000;
+    transition: 0.3s ease;
+}
+
+.auth-container button:hover {
+    background: #ffb3ff;
+}
+
+.auth-link {
+    margin-top: 1rem;
+    display: block;
+    font-size: 0.95rem;
+    color: #ffb3ff;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.auth-link:hover {
+    color: white;
+    text-shadow: 0 0 10px #ff80ff;
+}
+
+/* Botón de Google */
+.google-btn {
+    width: 100%;
+    background: white;
+    color: #000;
+    margin-top: 1rem;
+    font-weight: 600;
+    border-radius: 0.6rem;
+    padding: 0.9rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.google-btn:hover {
+    background: #ffe6ff;
+}

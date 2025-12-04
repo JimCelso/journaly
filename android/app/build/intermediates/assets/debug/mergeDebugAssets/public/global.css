@@ -1,0 +1,417 @@
+/* -------------------------------------------------------------------
+   🌑 ESTILOS GENERALES
+------------------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #0a0a0a;
+  color: #eaeaea;
+  font-family: "Poppins", sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* CONTENEDORES */
+.container,
+.login-container,
+.bio-container,
+.pens-container {
+  width: 95%;
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* -------------------------------------------------------------------
+   🌑 HEADER + NAVEGACIÓN
+------------------------------------------------------------------- */
+.header {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111;
+  border-bottom: 1px solid rgba(150, 70, 255, 0.25);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo,
+.username {
+  font-size: 20px;
+  font-weight: 600;
+  color: #c085ff;
+  text-shadow: 0 0 8px rgba(180, 90, 255, 0.4);
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav a {
+  color: #bca8ff;
+  text-decoration: none;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+.nav a:hover {
+  color: #fff;
+  text-shadow: 0 0 8px #b27bff;
+}
+
+/* Botón logout en menú */
+#btnLogout {
+  background: #c51162 !important;
+  border: none !important;
+  color: white !important;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* -------------------------------------------------------------------
+   🍔 MENÚ HAMBURGUESA
+------------------------------------------------------------------- */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 1001;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.hamburger:hover {
+  background: rgba(192, 132, 255, 0.1);
+}
+
+.hamburger span {
+  width: 28px;
+  height: 3px;
+  background: #c085ff;
+  border-radius: 5px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.nav {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* MÓVIL */
+@media (max-width: 768px) {
+
+  .hamburger {
+    display: flex;
+  }
+
+  .nav {
+    position: fixed;
+    top: 70px;
+    right: 0;
+    width: 70%;
+    max-width: 280px;
+    height: calc(100vh - 70px);
+    background: rgba(20, 20, 20, 0.98);
+    border-left: 1px solid rgba(150, 70, 255, 0.3);
+    backdrop-filter: blur(8px);
+    padding: 20px 0;
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+    overflow-y: auto;
+    z-index: 999;
+  }
+
+  .nav.show {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .nav li {
+    border-bottom: 1px solid rgba(150, 70, 255, 0.15);
+  }
+
+  .nav a {
+    font-size: 18px;
+    display: block;
+    padding: 16px 20px;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .nav a:hover {
+    background: rgba(192, 132, 255, 0.1);
+    padding-left: 26px;
+  }
+
+  #btnLogout {
+    background: #c51162 !important;
+    border: none !important;
+    color: white !important;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 12px 16px !important;
+  }
+
+  #btnLogout:hover {
+    background: #e82860 !important;
+  }
+
+  /* Scroll lock cuando menú está abierto */
+  body.menu-open {
+    overflow: hidden;
+  }
+}
+
+/* -------------------------------------------------------------------
+   📝 INPUTS / TEXTAREAS / BOTONES
+------------------------------------------------------------------- */
+input,
+textarea,
+.bio-textarea,
+.pens-textarea {
+  width: 100%;
+  padding: 12px;
+  background: #111;
+  border: 1px solid rgba(150, 70, 255, 0.3);
+  border-radius: 10px;
+  color: #fff;
+  margin-top: 10px;
+  font-size: 16px;
+  resize: none;
+}
+
+/* BIO */
+.bio-textarea {
+  height: 300px;
+  background: #603b3b52;
+  box-shadow: 0 0 10px rgba(150, 70, 255, 0.15);
+}
+
+.bio-textarea:focus {
+  border-color: #bb7aff;
+  box-shadow: 0 0 12px rgba(187, 122, 255, 0.4);
+}
+
+/* Pensamientos */
+.pens-textarea {
+  height: 140px;
+}
+
+/* Botones generales */
+button,
+.btn-save,
+.btn,
+.btn-actualizar,
+.upload-btn,
+.uploadBtn,
+.recordBtn,
+.stopBtn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 15px;
+  font-size: 17px;
+  cursor: pointer;
+  background: #8f4aff;
+  color: white;
+  box-shadow: 0 0 10px rgba(150, 70, 255, 0.4);
+  transition: 0.2s ease;
+}
+
+button:hover,
+.btn-save:hover {
+  background: #a96bff;
+}
+
+/* Botones especiales */
+.upload-btn { background-color: #ff2f9e; }
+.upload-btn:hover { background: #ff47ad; }
+
+.uploadBtn { background: #00e676; }
+.recordBtn { background: #ff1744; }
+.stopBtn { background: #c51162; }
+
+/* -------------------------------------------------------------------
+   📸 FOTOS (Galería)
+------------------------------------------------------------------- */
+.gallery {
+  padding: 20px;
+  column-count: 3;
+  column-gap: 15px;
+}
+
+@media (max-width: 900px) {
+  .gallery { column-count: 2; }
+}
+@media (max-width: 600px) {
+  .gallery { column-count: 1; }
+}
+
+.photo-item {
+  width: 100%;
+  margin-bottom: 15px;
+  break-inside: avoid;
+  background: #151515;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #222;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.photo-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.photo-item img {
+  width: 100%;
+  display: block;
+}
+
+/* Borrar */
+.delete-btn,
+.deleteBtn {
+  background: #ff3b3b;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background .2s;
+}
+
+.delete-btn:hover,
+.deleteBtn:hover {
+  background: #ff5858;
+}
+
+/* Pensamientos: ícono de borrar */
+.pens-item .delete-btn {
+  background: transparent;
+  color: #ff6b6b;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.pens-item .delete-btn:hover {
+  color: red;
+  transform: scale(1.2);
+}
+
+/* -------------------------------------------------------------------
+   💬 PENSAMIENTOS
+------------------------------------------------------------------- */
+.pens-item {
+  background: #111;
+  border: 1px solid rgba(150,70,255,0.3);
+  padding: 12px;
+  border-radius: 10px;
+  color: white;
+  margin-bottom: 12px;
+  position: relative;
+  box-shadow: 0 0 10px rgba(150,70,255,0.2);
+}
+
+.pens-text { font-size: 16px; margin-bottom: 6px; }
+.pens-date { font-size: 13px; opacity: 0.7; }
+
+/* -------------------------------------------------------------------
+   🔔 POPUP
+------------------------------------------------------------------- */
+.popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #4CAF50;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: 0.3s ease;
+  z-index: 9999;
+}
+
+.popup.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* -------------------------------------------------------------------
+   👣 FOOTER
+------------------------------------------------------------------- */
+.footer-copy {
+  width: 100%;
+  text-align: center;
+  padding: 15px 0;
+  color: #aaa;
+  font-size: 14px;
+  border-top: 1px solid #222;
+  margin-top: 40px;
+}
+
+/* -------------------------------------------------------------------
+   📱 RESPONSIVE GENERAL
+------------------------------------------------------------------- */
+@media (max-width: 768px) {
+
+  .header { flex-direction: column; gap: 10px; text-align: center; }
+
+  .nav ul { flex-wrap: wrap; justify-content: center; }
+
+  .popup {
+    right: 50%;
+    transform: translateX(50%) translateY(-10px);
+    width: 90%;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .bio-textarea { height: 220px; font-size: 15px; }
+}
+
+/* ================================
+   📄 FOOTER
+================================ */
+.footer-copy {
+  width: 100%;
+  text-align: center;
+  padding: 15px 0;
+  color: #aaa;
+  font-size: 14px;
+  border-top: 1px solid #222;
+  margin-top: 40px;
+}

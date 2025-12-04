@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Crear Cuenta</title>
+  <link rel="stylesheet" href="login.css"/>
+  <link rel="stylesheet" href="global.css" />
+</head>
+<body>
+
+  <div class="login-container">
+    <h1 class="title">Crear Cuenta</h1>
+
+    <form id="signupForm">
+      <input type="text" id="username" placeholder="Nombre de usuario" required>
+      <input type="email" id="email" placeholder="Correo electrónico" required>
+      <input type="password" id="password" placeholder="Contraseña" required>
+      <button type="submit" class="btn">Registrarse</button>
+    </form>
+
+    <p class="alt">¿Ya tienes cuenta? <a href="login.html">Iniciar sesión</a></p>
+    <p id="errorMsg" class="error"></p>
+  </div>
+<footer class="footer-copy">
+  © 2025 Chaneke38 – Todos los derechos reservados.
+</footer>
+
+  <!-- IMPORTS NECESARIOS -->
+  <script type="module" src="firebase-init.js"></script>
+  <script type="module" src="auth-firebase.js"></script>
+  <script type="module" src="signup.js"></script>
+
+</body>
+</html>

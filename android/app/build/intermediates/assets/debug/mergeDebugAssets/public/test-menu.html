@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Menu</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .header {
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #111;
+      border-bottom: 1px solid #333;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 600;
+      color: #c085ff;
+    }
+
+    /* HAMBURGUESA */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 1001;
+      padding: 8px;
+    }
+
+    .hamburger span {
+      width: 28px;
+      height: 3px;
+      background: #c085ff;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* MENÚ NAVEGACIÓN */
+    .nav {
+      transition: all 0.3s ease;
+    }
+
+    .nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav a {
+      color: #bca8ff;
+      text-decoration: none;
+    }
+
+    /* MÓVIL */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav {
+        position: fixed;
+        top: 70px;
+        right: 0;
+        width: 70%;
+        max-width: 280px;
+        height: calc(100vh - 70px);
+        background: rgba(20, 20, 20, 0.98);
+        padding: 20px 0;
+        transform: translateX(100%);
+        opacity: 0;
+        visibility: hidden;
+        z-index: 999;
+      }
+
+      .nav.show {
+        transform: translateX(0);
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .nav ul {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .nav li {
+        border-bottom: 1px solid #333;
+      }
+
+      .nav a {
+        display: block;
+        padding: 16px 20px;
+      }
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .test-log {
+      background: #111;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 8px;
+      border: 1px solid #333;
+      max-height: 300px;
+      overflow-y: auto;
+      font-size: 12px;
+      color: #0f0;
+      font-family: monospace;
+    }
+
+    .test-log p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1 class="logo">Test Menu</h1>
+    <div class="hamburger" id="hamburgerBtn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav class="nav" id="mobileMenu">
+      <ul>
+        <li><a href="#test1">Test 1</a></li>
+        <li><a href="#test2">Test 2</a></li>
+        <li><a href="#test3">Test 3</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>Prueba de Menú Hamburguesa</h2>
+    <p>Abre esto en modo móvil (F12 → Device Toolbar) o en tu celular.</p>
+    <p>Haz clic en el ícono ☰ en la esquina superior derecha.</p>
+    
+    <div class="test-log" id="testLog">
+      <p>🔍 Esperando eventos...</p>
+    </div>
+  </main>
+
+  <script>
+    const log = document.getElementById("testLog");
+    
+    function addLog(msg) {
+      const p = document.createElement("p");
+      p.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+      log.appendChild(p);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    const hamburger = document.getElementById("hamburgerBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    addLog("✓ Elementos encontrados");
+    addLog(`hamburger: ${hamburger ? "SÍ" : "NO"}`);
+    addLog(`mobileMenu: ${mobileMenu ? "SÍ" : "NO"}`);
+
+    hamburger.addEventListener("click", (e) => {
+      addLog("🖱️ Click en hamburguesa");
+      hamburger.classList.toggle("active");
+      mobileMenu.classList.toggle("show");
+      addLog(`active: ${hamburger.classList.contains("active")}`);
+      addLog(`show: ${mobileMenu.classList.contains("show")}`);
+    });
+
+    const links = mobileMenu.querySelectorAll("a");
+    links.forEach((link) => {
+      link.addEventListener("click", () => {
+        addLog("🔗 Click en enlace");
+        hamburger.classList.remove("active");
+        mobileMenu.classList.remove("show");
+      });
+    });
+
+    addLog("✓ Listeners registrados");
+  </script>
+</body>
+</html>

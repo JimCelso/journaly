@@ -1,0 +1,112 @@
+/* ======== ESTILO GENERAL ======== */
+body {
+  margin: 0;
+  padding: 0;
+  background: #0a0a0a;
+  font-family: "Poppins", sans-serif;
+  color: #fff;
+}
+
+/* ======== CONTROLES DE FOTO ======== */
+.photo-controls {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #222;
+}
+
+.upload-btn {
+  display: inline-block;
+  margin: 5px;
+  padding: 12px 20px;
+  background-color: #ff2f9e;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background .2s;
+}
+
+.upload-btn:hover {
+  background-color: #ff47ad;
+}
+
+#uploadInput {
+  display: none;
+}
+
+#cameraPreview {
+  margin-top: 10px;
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+/* ======== GALERÍA ======== */
+.gallery {
+  padding: 20px;
+  column-count: 3;
+  column-gap: 15px;
+}
+
+@media (max-width: 900px) {
+  .gallery {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery {
+    column-count: 1;
+  }
+}
+
+/* ======== TARJETAS ======== */
+.photo-item {
+  width: 100%;
+  margin-bottom: 15px;
+  break-inside: avoid;
+  background: #151515;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #222;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.photo-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.photo-item img {
+  width: 100%;
+  display: block;
+}
+
+/* ======== BORRAR ======== */
+.delete-btn {
+  background: #ff3b3b;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 10px;
+  float: right;
+  font-size: 13px;
+  transition: background .2s;
+}
+
+.delete-btn:hover {
+  background: #ff5858;
+}
+
+/* ======== FOOTER COPY ======== */
+.footer-copy {
+  width: 100%;
+  text-align: center;
+  padding: 15px 0;
+  color: #aaa;
+  font-size: 14px;
+  border-top: 1px solid #222;
+  margin-top: 40px;
+}

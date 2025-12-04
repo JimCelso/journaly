@@ -1,0 +1,7 @@
+com.tudiario.app.test.app-core-1.6.1-0 C:\Users\celso\.gradle\caches\8.13\transforms\3047d3a9d7320bc841b3633098558fd6\transformed\core-1.6.1\res
+com.tudiario.app.test.app-tracing-1.2.0-1 C:\Users\celso\.gradle\caches\8.13\transforms\436498a32e3d4d1b0ec72ec894575dc3\transformed\tracing-1.2.0\res
+com.tudiario.app.test.app-androidTest-2 C:\Users\celso\journaly\android\app\build\generated\res\resValues\androidTest\debug
+com.tudiario.app.test.app-updated_navigation_xml-3 C:\Users\celso\journaly\android\app\build\generated\updated_navigation_xml\debugAndroidTest
+com.tudiario.app.test.app-mergeDebugAndroidTestResources-4 C:\Users\celso\journaly\android\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.tudiario.app.test.app-mergeDebugAndroidTestResources-5 C:\Users\celso\journaly\android\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.tudiario.app.test.app-debugAndroidTest-6 C:\Users\celso\journaly\android\app\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources

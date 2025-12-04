@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Configurar Perfil</title>
+    <script type="module">
+        // ------------------------------
+        // IMPORTAR FIREBASE
+        // ------------------------------
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // ------------------------------
+        // CONFIG FIREBASE (TUYA)
+        // ------------------------------
+        const firebaseConfig = {
+            apiKey: "AIzaSyAKg-wwIf3LSG0ffS-jdyIN8OXUCeaNcmM",
+            authDomain: "diario-personal-883e2.firebaseapp.com",
+            projectId: "diario-personal-883e2",
+            storageBucket: "diario-personal-883e2.appspot.com",
+            messagingSenderId: "1063174567234",
+            appId: "1:1063174567234:web:0e9e0f738d50efa470e570"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const saveBtn = document.addEventListener("DOMContentLoaded", () => {
+            const btn = document.getElementById("saveProfile");
+
+            onAuthStateChanged(auth, (user) => {
+                if (!user) {
+                    window.location.href = "login.html";
+                }
+
+                btn.addEventListener("click", async () => {
+                    const nombre = document.getElementById("nombre").value;
+                    const apellido = document.getElementById("apellido").value;
+
+                    if (!nombre || !apellido) {
+                        alert("Completa los dos campos.");
+                        return;
+                    }
+
+                    await setDoc(doc(db, "users", user.uid), {
+                        nombre,
+                        apellido
+                    }, { merge: true });
+
+                    alert("Perfil guardado.");
+                    window.location.href = "index.html";
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h2>Configurar Perfil</h2>
+
+    <label>Nombre:</label>
+    <input type="text" id="nombre" /><br><br>
+
+    <label>Apellido:</label>
+    <input type="text" id="apellido" /><br><br>
+
+    <button id="saveProfile">Guardar</button>
+</body>
+</html>
