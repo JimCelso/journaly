@@ -162,6 +162,7 @@ main {
   transition: all 0.3s ease;
   -webkit-user-select: none;
   user-select: none;
+  z-index: 10005;
 }
 
 .hamburger:active {
@@ -186,7 +187,8 @@ main {
   transform: scaleX(0);
 }
 
-.hamburger.active span:nth-child(3) {
+  z-index: 10000;
+  pointer-events: auto;
   transform: translateY(-9px) rotate(-45deg);
 }
 
@@ -205,6 +207,9 @@ main {
     top: 0;
     right: 0;
     width: 100%;
+.nav {
+  pointer-events: auto;
+}
     max-width: 85vw;
     height: 100vh;
     background: linear-gradient(180deg, rgba(20, 20, 20, 0.99) 0%, rgba(10, 10, 10, 0.99) 100%);
