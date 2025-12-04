@@ -18,6 +18,9 @@ const frases = [
 function cambiarFrase() {
     const fraseEl = document.getElementById("frase");
 
+    // Si el elemento no existe en esta página, salir sin hacer nada
+    if (!fraseEl) return;
+
     // Desvanecer
     fraseEl.style.opacity = 0;
 
@@ -30,8 +33,11 @@ function cambiarFrase() {
     }, 300);
 }
 
-// Primera frase al cargar
-cambiarFrase();
+// Solo iniciar si el elemento existe en la página
+if (document.getElementById("frase")) {
+    // Primera frase al cargar
+    cambiarFrase();
 
-// Cambiar cada 4 segundos
-setInterval(cambiarFrase, 4000);
+    // Cambiar cada 4 segundos
+    setInterval(cambiarFrase, 4000);
+}
