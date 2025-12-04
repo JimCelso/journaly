@@ -89,6 +89,33 @@ main {
   align-items: center;
 }
 
+/* Center navigation on desktop */
+@media (min-width: 769px) {
+  .header {
+    position: relative;
+  }
+
+  .logo,
+  .username {
+    flex: none;
+  }
+
+  .nav {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: transparent;
+    box-shadow: none;
+    border-left: none;
+    width: auto;
+  }
+
+  .nav ul {
+    justify-content: center;
+  }
+}
+
 .nav a {
   color: #bca8ff;
   text-decoration: none;
