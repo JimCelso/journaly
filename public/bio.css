@@ -1,43 +1,6 @@
-body {
-  margin: 0;
-  background: #0a0a0a;
-  color: #eaeaea;
-  font-family: "Poppins", sans-serif;
-}
-
-/* Header */
-.header {
-  padding: 20px;
-  border-bottom: 1px solid rgb(90, 42, 153);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-size: 22px;
-  color: #c085ff;
-  text-shadow: 0 0 8px rgba(180, 90, 255, 0.4);
-}
-
-.nav ul {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-}
-
-.nav a {
-  color: #bca8ff;
-  text-decoration: none;
-  transition: 0.2s;
-}
-
-.nav a:hover {
-  color: #fff;
-  text-shadow: 0 0 8px #b27bff;
-}
-
-/* BIO PAGE */
+/* ================================
+   📘 BIO CONTAINER
+================================ */
 .bio-container {
   max-width: 900px;
   margin: 40px auto;
@@ -50,6 +13,9 @@ body {
   margin-bottom: 20px;
 }
 
+/* ================================
+   ✍️ TEXTAREA
+================================ */
 .bio-textarea {
   width: 100%;
   height: 300px;
@@ -69,6 +35,9 @@ body {
   box-shadow: 0 0 12px rgba(187, 122, 255, 0.4);
 }
 
+/* ================================
+   💜 BOTÓN GUARDAR
+================================ */
 .btn-save {
   margin-top: 15px;
   padding: 12px 20px;
@@ -87,12 +56,18 @@ body {
   box-shadow: 0 0 14px rgba(180, 90, 255, 0.55);
 }
 
+/* ================================
+   🔔 ESTADO (texto)
+================================ */
 .status {
   margin-top: 10px;
   color: #b989ff;
   font-size: 15px;
 }
 
+/* ================================
+   💬 POPUP
+================================ */
 .popup {
   position: fixed;
   top: 20px;
@@ -112,4 +87,33 @@ body {
 .popup.show {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Centrar menú principal en escritorio */
+.header .nav {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.header .nav-list {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ================================
+   📄 FOOTER
+================================ */
+.footer-copy {
+  width: 100%;
+  text-align: center;
+  padding: 15px 0;
+  color: #aaa;
+  font-size: 14px;
+  border-top: 1px solid #222;
+  margin-top: 40px;
 }

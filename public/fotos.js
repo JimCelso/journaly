@@ -1,4 +1,5 @@
 import { auth, storage } from "./firebase-init.js";
+import { logout } from "./auth-firebase.js";
 import {
   ref,
   uploadBytesResumable,
@@ -117,4 +118,17 @@ function agregarFoto(url, fullPath) {
   });
 
   gallery.prepend(div); // Aparece primero en la parte superior de la galería
+}
+
+// Logout
+const btnLogout = document.getElementById("btnLogout");
+if (btnLogout) {
+  btnLogout.addEventListener("click", async (e) => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+      alert("Hubo un problema al cerrar sesión.");
+    }
+  });
 }

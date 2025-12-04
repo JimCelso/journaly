@@ -1,6 +1,6 @@
 // profile-firebase.js
 import { db, auth } from "./firebase-init.js";
-import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
 /**
  * Guarda perfil (merge) del usuario actual.

@@ -1,4 +1,5 @@
 import { auth, db } from "./firebase-init.js";
+import { logout } from "./auth-firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
   collection,
@@ -10,14 +11,28 @@ import {
   doc
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
+
 const input = document.getElementById("pensInput");
 const btnSave = document.getElementById("btnSavePens");
 const list = document.getElementById("pensList");
 const popup = document.getElementById("successPopup");
+const btnLogout = document.getElementById("btnLogout");
 
 function showPopup() {
   popup.classList.add("show");
   setTimeout(() => popup.classList.remove("show"), 1800);
+}
+
+// Logout - Independiente de autenticación
+if (btnLogout) {
+  btnLogout.addEventListener("click", async (e) => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+      alert("Hubo un problema al cerrar sesión.");
+    }
+  });
 }
 
 onAuthStateChanged(auth, async (user) => {

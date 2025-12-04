@@ -80,5 +80,15 @@
 .delete-btn:hover {
   color: red;
   transform: scale(1.2);
+
 }
 
+.footer-copy {
+  width: 100%;
+  text-align: center;
+  padding: 15px 0;
+  color: #aaa;
+  font-size: 14px;
+  border-top: 1px solid #222;
+  margin-top: 40px;
+}

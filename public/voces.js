@@ -1,4 +1,5 @@
 import { auth, db, storage } from "./firebase-init.js";
+import { logout } from "./auth-firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 import {
   collection, addDoc, getDocs, query, orderBy, deleteDoc, doc
@@ -190,3 +191,16 @@ btnUploadRecorded.addEventListener("click", async () => {
     }
   );
 });
+
+// Logout
+const btnLogout = document.getElementById("btnLogout");
+if (btnLogout) {
+  btnLogout.addEventListener("click", async (e) => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+      alert("Hubo un problema al cerrar sesión.");
+    }
+  });
+}

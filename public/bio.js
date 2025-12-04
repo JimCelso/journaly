@@ -58,5 +58,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // --- Logout ---
-  btnLogout.addEventListener("click", logout);
+  btnLogout.addEventListener("click", async (e) => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+      alert("Hubo un problema al cerrar sesión.");
+    }
+  });
 });

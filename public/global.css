@@ -1,243 +1,171 @@
-/* --------------------------
-   ESTILOS GENERALES
---------------------------- */
+/* ===================================================================
+   🚀 APP NATIVA PARA CELULAR - ESTILO MODERNO
+=================================================================== */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: "Poppins", sans-serif;
-  background: #0a0a0a;
-  color: #eaeaea;
-  -webkit-tap-highlight-color: transparent;
+html {
+  /* Safe areas para notches */
+  padding-top: max(0px, env(safe-area-inset-top));
+  padding-bottom: max(0px, env(safe-area-inset-bottom));
+  padding-left: max(0px, env(safe-area-inset-left));
+  padding-right: max(0px, env(safe-area-inset-right));
 }
 
-/* --------------------------
-   CONTENEDORES GENERALES
---------------------------- */
+body {
+  margin: 0;
+  background: #0a0a0a;
+  color: #eaeaea;
+  font-family: "Poppins", sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Prevenir zoom en inputs */
+  font-size: 16px;
+  overflow-x: hidden;
+}
 
+/* Status bar dark para móvil */
+@supports (padding: max(0px)) {
+  body {
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+  }
+}
+
+/* ===================================================================
+   CONTENEDORES
+=================================================================== */
 .container,
 .login-container,
-.bio-container {
+.bio-container,
+.pens-container {
   width: 95%;
   max-width: 900px;
   margin: auto;
   padding: 20px;
+  padding-bottom: 100px; /* Espacio para móvil */
 }
 
-/* --------------------------
-   HEADER
---------------------------- */
+main {
+  min-height: calc(100vh - 200px);
+}
 
+/* ===================================================================
+   HEADER + NAVEGACIÓN
+=================================================================== */
 .header {
-  padding: 15px;
+  padding: 12px 15px;
+  padding-top: max(12px, env(safe-area-inset-top));
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
   border-bottom: 1px solid rgba(150, 70, 255, 0.25);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
+.logo,
 .username {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
+  color: #c085ff;
+  text-shadow: 0 0 8px rgba(180, 90, 255, 0.4);
+  flex: 1;
 }
 
-/* NAV */
+/* Navegación Desktop */
 .nav ul {
   list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 25px;
+  align-items: center;
 }
 
 .nav a {
   color: #bca8ff;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 6px;
 }
 
-.nav a:hover {
+.nav a:active {
   color: #fff;
+  text-shadow: 0 0 8px #b27bff;
+  background: rgba(192, 132, 255, 0.1);
 }
 
-/* --------------------------
-   TEXTAREA / INPUTS
---------------------------- */
-
-.bio-textarea,
-input,
-textarea {
-  width: 100%;
-  padding: 12px;
-  background: #111;
-  border: 1px solid rgba(150, 70, 255, 0.3);
-  border-radius: 10px;
-  color: #fff;
-  margin-top: 10px;
-  font-size: 16px;
-}
-
-/* --------------------------
-   BOTONES
---------------------------- */
-
-button,
-.btn-save,
-.btn,
-.btn-actualizar {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 10px;
-  margin-top: 15px;
-  font-size: 17px;
+/* Botón logout */
+#btnLogout {
+  background: #c51162 !important;
+  border: none !important;
+  color: white !important;
   cursor: pointer;
-  background: #8f4aff;
-  color: white;
-  box-shadow: 0 0 10px rgba(150, 70, 255, 0.4);
-  transition: 0.2s ease;
+  font-weight: 600 !important;
+  padding: 8px 16px !important;
+  border-radius: 6px !important;
+  transition: all 0.3s ease !important;
 }
 
-button:hover {
-  background: #a96bff;
+#btnLogout:active {
+  background: #e82860 !important;
+  transform: scale(0.95);
 }
 
-/* --------------------------
-   POPUP RESPONSIVO
---------------------------- */
-.popup {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: #4CAF50;
-  padding: 12px 18px;
-  border-radius: 10px;
-  font-size: 16px;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: 0.3s ease;
-  z-index: 9999;
-}
-
-.popup.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* --------------------------
-   RESPONSIVO PARA CELULAR
---------------------------- */
-@media (max-width: 768px) {
-
-  .header {
-    flex-direction: column;
-    gap: 10px;
-    text-align: center;
-  }
-
-  .username {
-    font-size: 18px;
-  }
-
-  .nav ul {
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
-  }
-
-  .nav a {
-    font-size: 14px;
-  }
-
-  /* textareas más cómodas */
-  .bio-textarea {
-    height: 220px;
-    font-size: 15px;
-  }
-
-  /* botones más grandes */
-  .btn-save,
-  .btn,
-  .btn-actualizar {
-    font-size: 16px;
-    padding: 14px;
-  }
-
-  .popup {
-    right: 50%;
-    transform: translateX(50%) translateY(-10px);
-    font-size: 14px;
-    width: 90%;
-    text-align: center;
-  }
-
-}
-
-/* --------------------------
-   RESPONSIVE PARA CELULAR PEQUEÑO
---------------------------- */
-@media (max-width: 480px) {
-
-  .username {
-    font-size: 16px;
-  }
-
-  .nav ul {
-    gap: 10px;
-  }
-
-  .nav a {
-    font-size: 13px;
-  }
-
-  input,
-  textarea {
-    font-size: 14px;
-  }
-
-  .btn-save,
-  .btn,
-  .btn-actualizar {
-    font-size: 15px;
-  }
-
-}
-
-/* --------------------------
-   MENU HAMBURGUESA
---------------------------- */
-
+/* ===================================================================
+   🍔 MENÚ HAMBURGUESA (MÓVIL)
+=================================================================== */
 .hamburger {
   display: none;
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
-  z-index: 10000;
+  z-index: 1001;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.hamburger:active {
+  background: rgba(192, 132, 255, 0.15);
 }
 
 .hamburger span {
-  width: 28px;
-  height: 3px;
+  width: 26px;
+  height: 2.5px;
   background: #c085ff;
-  border-radius: 5px;
-  transition: 0.3s ease;
+  border-radius: 3px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
 }
 
-/* Animación al activar */
 .hamburger.active span:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
+  transform: translateY(9px) rotate(45deg);
 }
+
 .hamburger.active span:nth-child(2) {
   opacity: 0;
-}
-.hamburger.active span:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
+  transform: scaleX(0);
 }
 
-/* Ocultar menú en móvil al inicio */
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Menú móvil deslizable */
 .nav {
-  transition: 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @media (max-width: 768px) {
@@ -246,18 +174,27 @@ button:hover {
   }
 
   .nav {
-    position: absolute;
-    top: 70px;
+    position: fixed;
+    top: 0;
     right: 0;
-    width: 70%;
-    background: rgba(20, 20, 20, 0.96);
-    border-left: 1px solid rgba(150, 70, 255, 0.3);
-    border-bottom: 1px solid rgba(150, 70, 255, 0.3);
-    backdrop-filter: blur(6px);
-    padding: 20px 0;
+    width: 100%;
+    max-width: 85vw;
+    height: 100vh;
+    background: linear-gradient(180deg, rgba(20, 20, 20, 0.99) 0%, rgba(10, 10, 10, 0.99) 100%);
+    backdrop-filter: blur(10px);
+    padding-top: max(60px, calc(60px + env(safe-area-inset-top)));
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+    padding-left: 20px;
+    padding-right: 20px;
     transform: translateX(100%);
     opacity: 0;
     visibility: hidden;
+    overflow-y: auto;
+    z-index: 999;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+    border-left: 1px solid rgba(150, 70, 255, 0.2);
+    /* Momentum scroll en iOS */
+    -webkit-overflow-scrolling: touch;
   }
 
   .nav.show {
@@ -268,11 +205,347 @@ button:hover {
 
   .nav ul {
     flex-direction: column;
-    align-items: center;
-    gap: 18px;
+    align-items: stretch;
+    gap: 12px;
   }
 
-  .nav a {
-    font-size: 18px;
+  .nav li {
+    border-bottom: 1px solid rgba(150, 70, 255, 0.15);
+  }
+
+  .nav a,
+  .nav button {
+    font-size: 16px;
+    display: block;
+    padding: 14px 16px;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+  }
+
+  .nav a:active,
+  .nav button:active {
+    background: rgba(192, 132, 255, 0.1);
+    padding-left: 20px;
+    color: #c085ff;
+  }
+
+  #btnLogout {
+    width: 100%;
+    background: #c51162 !important;
+    color: white !important;
+    font-weight: 600 !important;
+    margin-top: 20px !important;
+    padding: 12px 16px !important;
+  }
+
+  #btnLogout:active {
+    background: #e82860 !important;
+  }
+
+  /* Overlay oscuro cuando menú abierto */
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  body.menu-open::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+  }
+}
+
+/* ===================================================================
+   INPUTS & TEXTAREAS
+=================================================================== */
+input,
+textarea,
+.bio-textarea,
+.pens-textarea {
+  width: 100%;
+  padding: 12px;
+  background: #111;
+  border: 1px solid rgba(150, 70, 255, 0.3);
+  border-radius: 10px;
+  color: #fff;
+  margin-top: 10px;
+  font-size: 16px;
+  resize: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  /* iOS específico */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input:focus,
+textarea:focus,
+.bio-textarea:focus,
+.pens-textarea:focus {
+  outline: none;
+  border-color: #bb7aff;
+  box-shadow: 0 0 12px rgba(187, 122, 255, 0.4);
+  background: #151515;
+}
+
+/* Bio textarea */
+.bio-textarea {
+  height: 300px;
+  background: #603b3b52;
+}
+
+/* Pensamientos textarea */
+.pens-textarea {
+  height: 140px;
+}
+
+/* ===================================================================
+   BOTONES
+=================================================================== */
+button,
+.btn-save,
+.btn,
+.btn-actualizar,
+.upload-btn,
+.uploadBtn,
+.recordBtn,
+.stopBtn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 15px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #8f4aff;
+  color: white;
+  box-shadow: 0 0 10px rgba(150, 70, 255, 0.4);
+  transition: all 0.2s ease;
+  font-weight: 600;
+  font-family: inherit;
+  /* iOS específico */
+  -webkit-appearance: none;
+  appearance: none;
+  /* Prevenir zoom en iOS al hacer tap */
+  min-height: 44px;
+}
+
+button:active,
+.btn-save:active,
+.btn:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+/* Botones especiales */
+.upload-btn {
+  background-color: #ff2f9e;
+}
+
+.upload-btn:active {
+  background: #ff47ad;
+}
+
+.uploadBtn {
+  background: #00e676;
+  color: #000;
+}
+
+.recordBtn {
+  background: #ff1744;
+}
+
+.stopBtn {
+  background: #c51162;
+}
+
+/* ===================================================================
+   GALERÍA DE FOTOS
+=================================================================== */
+.gallery {
+  padding: 20px 0;
+  column-count: 3;
+  column-gap: 15px;
+}
+
+@media (max-width: 900px) {
+  .gallery {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery {
+    column-count: 1;
+  }
+}
+
+.photo-item {
+  width: 100%;
+  margin-bottom: 15px;
+  break-inside: avoid;
+  background: #151515;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #222;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.photo-item:active {
+  transform: scale(0.98);
+}
+
+.photo-item img {
+  width: 100%;
+  display: block;
+}
+
+/* Botón delete */
+.delete-btn,
+.deleteBtn {
+  background: #ff3b3b;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.2s;
+}
+
+.delete-btn:active,
+.deleteBtn:active {
+  background: #ff5858;
+}
+
+.pens-item .delete-btn {
+  background: transparent;
+  color: #ff6b6b;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.pens-item .delete-btn:active {
+  color: red;
+  transform: scale(1.2);
+}
+
+/* ===================================================================
+   PENSAMIENTOS
+=================================================================== */
+.pens-item {
+  background: #111;
+  border: 1px solid rgba(150, 70, 255, 0.3);
+  padding: 12px;
+  border-radius: 10px;
+  color: white;
+  margin-bottom: 12px;
+  position: relative;
+  box-shadow: 0 0 10px rgba(150, 70, 255, 0.2);
+  transition: all 0.2s ease;
+}
+
+.pens-item:active {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(150, 70, 255, 0.3);
+}
+
+.pens-text {
+  font-size: 16px;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.pens-date {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+/* ===================================================================
+   NOTIFICACIONES (POPUP)
+=================================================================== */
+.popup {
+  position: fixed;
+  top: max(20px, calc(20px + env(safe-area-inset-top)));
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: #4CAF50;
+  padding: 14px 20px;
+  border-radius: 10px;
+  font-size: 15px;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  max-width: 90vw;
+  text-align: center;
+}
+
+.popup.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ===================================================================
+   FOOTER
+=================================================================== */
+.footer-copy {
+  width: 100%;
+  text-align: center;
+  padding: 20px 0;
+  padding-bottom: max(20px, env(safe-area-inset-bottom));
+  color: #666;
+  font-size: 12px;
+  border-top: 1px solid #222;
+  margin-top: 60px;
+}
+
+/* ===================================================================
+   RESPONSIVO FINAL
+=================================================================== */
+@media (max-width: 480px) {
+  .container,
+  .login-container,
+  .bio-container,
+  .pens-container {
+    width: 100%;
+    padding: 15px;
+    padding-bottom: 100px;
+  }
+
+  .header {
+    padding: 10px 12px;
+  }
+
+  .logo,
+  .username {
+    font-size: 16px;
+  }
+
+  button,
+  .btn-save,
+  .btn {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .bio-textarea {
+    height: 200px;
+  }
+
+  .gallery {
+    column-count: 1;
+    column-gap: 10px;
   }
 }

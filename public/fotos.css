@@ -7,48 +7,6 @@ body {
   color: #fff;
 }
 
-/* ======== HEADER ======== */
-.header {
-  padding: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid rgba(150, 70, 255, 0.25);
-}
-
-/* NAV */
-.nav ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-}
-
-.nav a {
-  color: #bca8ff;
-  text-decoration: none;
-  font-size: 15px;
-}
-
-.nav a:hover {
-  color: #fff;
-}
-
-.header {
-  padding: 20px;
-  text-align: center;
-  background: #111;
-  border-bottom: 1px solid #222;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.header h1 {
-  margin: 0;
-  font-size: 26px;
-  font-weight: 600;
-}
-
 /* ======== CONTROLES DE FOTO ======== */
 .photo-controls {
   padding: 20px;
@@ -140,4 +98,15 @@ body {
 
 .delete-btn:hover {
   background: #ff5858;
+}
+
+/* ======== FOOTER COPY ======== */
+.footer-copy {
+  width: 100%;
+  text-align: center;
+  padding: 15px 0;
+  color: #aaa;
+  font-size: 14px;
+  border-top: 1px solid #222;
+  margin-top: 40px;
 }

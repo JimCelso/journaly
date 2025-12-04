@@ -41,6 +41,5 @@ onAuthStateChanged(auth, async (user) => {
 
 // 🚪 Botón: Cerrar Sesión
 btnLogout.addEventListener("click", async (e) => {
-  e.preventDefault();
   await logout();
 });

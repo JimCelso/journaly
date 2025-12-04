@@ -1,20 +1,20 @@
 import { auth, db } from "./firebase-init.js";
+import { logout } from "./auth-firebase.js";
+import { initHamburgerMenu } from "./hamburger-menu.js";
 import {
   doc,
   setDoc,
   getDoc
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
+// Inicializar menú hamburguesa
+initHamburgerMenu();
+
 const moodSelect = document.getElementById("moodSelect");
 const moodText = document.getElementById("moodText");
 const colorPick = document.getElementById("colorPick");
 const saveBtn = document.getElementById("saveMood");
 const statusMessage = document.getElementById("statusMessage");
-
-// Menú hamburguesa
-document.getElementById("hamburger").addEventListener("click", () => {
-  document.getElementById("navMenu").classList.toggle("show");
-});
 
 // Esperar a que cargue el usuario
 auth.onAuthStateChanged(async (user) => {
@@ -48,3 +48,16 @@ saveBtn.addEventListener("click", async () => {
   statusMessage.textContent = "Registro guardado ✓";
   setTimeout(() => statusMessage.textContent = "", 2000);
 });
+
+// Logout
+const btnLogout = document.getElementById("btnLogout");
+if (btnLogout) {
+  btnLogout.addEventListener("click", async (e) => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+      alert("Hubo un problema al cerrar sesión.");
+    }
+  });
+}

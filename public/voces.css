@@ -6,77 +6,6 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-/* 🔷 HEADER */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 20px;
-  background: #111;
-  border-bottom: 1px solid #222;
-}
-
-.logo {
-  font-size: 1.4rem;
-  color: #00c7ff;
-}
-
-/* 🔷 MENÚ NORMAL */
-.nav {
-  display: flex;
-  gap: 20px;
-}
-
-.nav a {
-  text-decoration: none;
-  color: #eaeaea;
-  font-size: 1rem;
-  transition: .2s;
-}
-
-.nav a:hover {
-  color: #00c7ff;
-}
-
-/* 🔷 HAMBURGUESA */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-}
-
-.hamburger span {
-  width: 28px;
-  height: 3px;
-  background: white;
-  border-radius: 2px;
-}
-
-/* 🔷 MENÚ MÓVIL */
-@media (max-width: 750px) {
-
-  .nav {
-    position: absolute;
-    top: 72px;
-    right: 0;
-    background: #111;
-    padding: 20px;
-    display: none;
-    flex-direction: column;
-    width: 200px;
-    box-shadow: 0 0 15px #000;
-  }
-
-  .nav.show {
-    display: flex;
-  }
-
-  .hamburger {
-    display: flex;
-  }
-}
-
 /* 🌑 CONTENIDO */
 .container {
   max-width: 900px;
@@ -189,4 +118,14 @@ body {
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 10px;
+}
+
+.footer-copy {
+  width: 100%;
+  text-align: center;
+  padding: 15px 0;
+  color: #aaa;
+  font-size: 14px;
+  border-top: 1px solid #222;
+  margin-top: 40px;
 }
