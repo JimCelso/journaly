@@ -139,12 +139,55 @@ async function loadAudios(uid) {
 let mediaRecorder;
 let recordedChunks = [];
 let recordedBlob = null;
+let stream = null; // Guardar referencia del stream
 
 const btnRecord = document.getElementById("btnRecord");
 const btnStop = document.getElementById("btnStop");
 const preview = document.getElementById("previewAudio");
 const btnUploadRecorded = document.getElementById("btnUploadRecorded");
 
+// Detectar navegador
+function getBrowserInfo() {
+  const ua = navigator.userAgent;
+  if (ua.indexOf("Safari") > -1 && ua.indexOf("Chrome") === -1) {
+    return "safari";
+  }
+  if (ua.indexOf("Chrome") > -1 || ua.indexOf("Chromium") > -1) {
+    return "chrome";
+  }
+  if (ua.indexOf("Firefox") > -1) {
+    return "firefox";
+  }
+  return "unknown";
+}
+
+// Obtener MIME type soportado para MediaRecorder
+function getSupportedMimeType() {
+  const browser = getBrowserInfo();
+  const candidates = [];
+
+  if (browser === "safari") {
+    // Safari prefiere estos formatos
+    candidates.push("audio/mp4");
+    candidates.push("audio/aac");
+  }
+  
+  // Candidatos universales
+  candidates.push("audio/webm");
+  candidates.push("audio/wav");
+  candidates.push("audio/ogg");
+  candidates.push("audio/opus");
+  candidates.push("audio/mpeg");
+
+  for (const mimeType of candidates) {
+    if (MediaRecorder.isTypeSupported(mimeType)) {
+      return mimeType;
+    }
+  }
+
+  // Fallback: usar el default del navegador (sin especificar MIME type)
+  return "";
+}
 
 // Iniciar grabación
 btnRecord.addEventListener("click", async () => {
@@ -157,9 +200,19 @@ btnRecord.addEventListener("click", async () => {
     }
 
     // Solicitar acceso al micrófono
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    stream = await navigator.mediaDevices.getUserMedia({ 
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        autoGainControl: true
+      }
+    });
 
-    mediaRecorder = new MediaRecorder(stream);
+    // Obtener MIME type soportado
+    const mimeType = getSupportedMimeType();
+    
+    const mediaRecorderOptions = mimeType ? { mimeType } : {};
+    mediaRecorder = new MediaRecorder(stream, mediaRecorderOptions);
     recordedChunks = [];
 
     mediaRecorder.ondataavailable = (e) => {
@@ -167,13 +220,16 @@ btnRecord.addEventListener("click", async () => {
     };
 
     mediaRecorder.onstop = () => {
-      recordedBlob = new Blob(recordedChunks, { type: "audio/webm" });
+      // Usar el MIME type que se está usando en la grabación
+      const mimeType = mediaRecorder.mimeType || "audio/webm";
+      recordedBlob = new Blob(recordedChunks, { type: mimeType });
       preview.src = URL.createObjectURL(recordedBlob);
       preview.style.display = "block";
       btnUploadRecorded.style.display = "block";
       
       // Detener tracks del stream
       stream.getTracks().forEach(track => track.stop());
+      stream = null;
     };
 
     mediaRecorder.start();
@@ -181,14 +237,23 @@ btnRecord.addEventListener("click", async () => {
     btnStop.style.display = "block";
   } catch (error) {
     console.error("Error al iniciar grabación:", error);
-    alert("Error al acceder al micrófono. Verifica los permisos.");
+    const browser = getBrowserInfo();
+    let message = "Error al acceder al micrófono. Verifica los permisos.";
+    
+    if (browser === "safari") {
+      message = "Safari requiere HTTPS o localhost para grabar. Asegúrate de permitir el acceso al micrófono en los permisos del sitio.";
+    }
+    
+    alert(message);
   }
 });
 
 
 // Detener grabación
 btnStop.addEventListener("click", () => {
-  mediaRecorder.stop();
+  if (mediaRecorder && mediaRecorder.state !== "inactive") {
+    mediaRecorder.stop();
+  }
   btnStop.style.display = "none";
   btnRecord.style.display = "block";
 });
@@ -199,33 +264,55 @@ btnUploadRecorded.addEventListener("click", async () => {
   const user = auth.currentUser;
   if (!user || !recordedBlob) return;
 
-  const fileName = Date.now() + "_grabacion.webm";
-
-  // 🔥 ruta unificada
-  const fileRef = ref(storage, `voces/${user.uid}/${fileName}`);
-
-  const uploadTask = uploadBytesResumable(fileRef, recordedBlob);
-
-  uploadTask.on(
-    "state_changed",
-    () => {},
-    (err) => console.error(err),
-    async () => {
-      const url = await getDownloadURL(uploadTask.snapshot.ref);
-
-      await addDoc(collection(db, "users", user.uid, "voces"), {
-        url,
-        nombre: fileName,
-        fecha: new Date(),
-      });
-
-      showPopup();
-
-      preview.style.display = "none";
-      btnUploadRecorded.style.display = "none";
-      loadAudios(user.uid);
+  try {
+    // Obtener extensión basada en MIME type
+    let extension = "webm";
+    if (recordedBlob.type.includes("mp4") || recordedBlob.type.includes("aac")) {
+      extension = "m4a";
+    } else if (recordedBlob.type.includes("wav")) {
+      extension = "wav";
+    } else if (recordedBlob.type.includes("ogg") || recordedBlob.type.includes("opus")) {
+      extension = "ogg";
+    } else if (recordedBlob.type.includes("mpeg")) {
+      extension = "mp3";
     }
-  );
+
+    const fileName = Date.now() + "_grabacion." + extension;
+
+    // 🔥 ruta unificada
+    const fileRef = ref(storage, `voces/${user.uid}/${fileName}`);
+
+    const uploadTask = uploadBytesResumable(fileRef, recordedBlob);
+
+    uploadTask.on(
+      "state_changed",
+      () => {},
+      (err) => {
+        console.error("Error al subir grabación:", err);
+        alert("Error al subir la grabación. Intenta de nuevo.");
+      },
+      async () => {
+        const url = await getDownloadURL(uploadTask.snapshot.ref);
+
+        await addDoc(collection(db, "users", user.uid, "voces"), {
+          url,
+          nombre: fileName,
+          fecha: new Date(),
+        });
+
+        showPopup();
+
+        preview.style.display = "none";
+        btnUploadRecorded.style.display = "none";
+        recordedBlob = null;
+        recordedChunks = [];
+        loadAudios(user.uid);
+      }
+    );
+  } catch (error) {
+    console.error("Error en subir grabación:", error);
+    alert("Error al procesar la grabación.");
+  }
 });
 
 // Logout
