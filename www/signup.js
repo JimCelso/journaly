@@ -12,7 +12,8 @@ form.addEventListener("submit", async (e) => {
 
   try {
     await signup(username, email, password);
-    window.location.href = "login.html";
+    // Al crear la cuenta, redirigir al inicio; el guard mostrará el modal si no aceptó
+    window.location.href = "index.html";
   } catch (err) {
     errorMsg.textContent = err.message;
   }

@@ -24,7 +24,10 @@ export async function signup(username, email, password) {
   await setDoc(doc(db, "users", user.uid), {
     username: username,
     email: email,
-    createdAt: new Date()
+    createdAt: new Date(),
+    // Flags de aceptación legal
+    accepted_privacy: false,
+    accepted_terms: false
   });
 
   return user;

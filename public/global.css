@@ -398,6 +398,30 @@ button:active,
 
 .uploadBtn {
   background: #00e676;
+}
+
+/* FOOTER AND PAGE LAYOUT: keep footer at bottom for short pages */
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.footer-copy {
+  text-align: center;
+  padding: 14px 12px;
+  font-size: 0.95rem;
+  color: #cfcfcf;
+  background: transparent;
+}
   color: #000;
 }
 

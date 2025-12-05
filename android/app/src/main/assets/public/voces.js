@@ -199,14 +199,28 @@ btnRecord.addEventListener("click", async () => {
       return;
     }
 
-    // Solicitar acceso al micrófono
-    stream = await navigator.mediaDevices.getUserMedia({ 
+    // Logs diagnósticos antes de solicitar acceso al micrófono
+    console.log('btnRecord clicked - isCapacitor:', isCapacitor);
+    console.log('navigator.mediaDevices exists:', !!navigator.mediaDevices);
+    try {
+      if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        console.log('Available media devices:', devices);
+      }
+    } catch (dErr) {
+      console.warn('Error enumerating devices:', dErr);
+    }
+
+    // Solicitar acceso al micrófono (con opciones)
+    console.log('Requesting getUserMedia...');
+    stream = await navigator.mediaDevices.getUserMedia({
       audio: {
         echoCancellation: true,
         noiseSuppression: true,
         autoGainControl: true
       }
     });
+    console.log('getUserMedia success, stream:', stream);
 
     // Obtener MIME type soportado
     const mimeType = getSupportedMimeType();
@@ -237,14 +251,24 @@ btnRecord.addEventListener("click", async () => {
     btnStop.style.display = "block";
   } catch (error) {
     console.error("Error al iniciar grabación:", error);
+    // Mostrar detalles para diagnóstico
+    const errName = error && error.name ? error.name : 'UnknownError';
+    const errMsg = error && error.message ? error.message : String(error);
+    console.log('getUserMedia error name:', errName, 'message:', errMsg, 'full:', error);
+
     const browser = getBrowserInfo();
     let message = "Error al acceder al micrófono. Verifica los permisos.";
-    
-    if (browser === "safari") {
+
+    if (errName === 'NotAllowedError' || errName === 'SecurityError' || errName === 'PermissionDeniedError') {
+      message = 'Permiso denegado para el micrófono. Verifica los permisos de la app y del sitio.';
+    } else if (errName === 'NotFoundError' || errName === 'OverconstrainedError') {
+      message = 'No se encontró dispositivo de entrada de audio en el dispositivo.';
+    } else if (browser === "safari") {
       message = "Safari requiere HTTPS o localhost para grabar. Asegúrate de permitir el acceso al micrófono en los permisos del sitio.";
     }
-    
-    alert(message);
+
+    // Mostrar alerta y dejar registro en consola (útil para adb logcat)
+    alert(message + "\n(" + errName + "): " + errMsg);
   }
 });
 
